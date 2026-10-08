@@ -1,0 +1,1376 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Zev &amp; Eve Morning Routine</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Grandstander:wght@600;800&family=Nunito:wght@600;700;800&display=swap">
+<style>
+:root{
+  --sky-top:#DDE9FF;
+  --sky-bot:#FFE7D4;
+  --paper:#FFFFFF;
+  --paper-tint:#F5F8FF;
+  --ink:#1E2350;
+  --ink-soft:#5C6396;
+  --line:#CFD9F2;
+  --sun:#FFC13B;
+  --sun-deep:#EE9B14;
+  --sun-glow:#FFF0C8;
+  --zev:#0F9E98;
+  --zev-tint:#DFF5F3;
+  --eve:#DE4E88;
+  --eve-tint:#FCE2EC;
+  --shadow:0 10px 30px rgba(30,35,80,.10);
+  --shadow-lift:0 6px 18px rgba(30,35,80,.14);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --sky-top:#0D1233;
+    --sky-bot:#2A1A3C;
+    --paper:#191F45;
+    --paper-tint:#141A3B;
+    --ink:#EEF2FF;
+    --ink-soft:#A6AFDF;
+    --line:#333C74;
+    --sun:#FFCE5C;
+    --sun-deep:#FFB021;
+    --sun-glow:#4A3A12;
+    --zev:#43D8CD;
+    --zev-tint:#0E3B39;
+    --eve:#FF86B4;
+    --eve-tint:#432031;
+    --shadow:0 10px 30px rgba(0,0,0,.32);
+    --shadow-lift:0 6px 18px rgba(0,0,0,.40);
+  }
+}
+:root[data-theme="dark"]{
+  --sky-top:#0D1233;
+  --sky-bot:#2A1A3C;
+  --paper:#191F45;
+  --paper-tint:#141A3B;
+  --ink:#EEF2FF;
+  --ink-soft:#A6AFDF;
+  --line:#333C74;
+  --sun:#FFCE5C;
+  --sun-deep:#FFB021;
+  --sun-glow:#4A3A12;
+  --zev:#43D8CD;
+  --zev-tint:#0E3B39;
+  --eve:#FF86B4;
+  --eve-tint:#432031;
+  --shadow:0 10px 30px rgba(0,0,0,.32);
+  --shadow-lift:0 6px 18px rgba(0,0,0,.40);
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family:"Nunito",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  color:var(--ink);
+  background:linear-gradient(170deg,var(--sky-top) 0%,var(--sky-bot) 100%);
+  background-attachment:fixed;
+  -webkit-text-size-adjust:100%;
+  -webkit-tap-highlight-color:transparent;
+  overflow:hidden;
+}
+
+.app{
+  height:100svh;
+  max-width:1440px;
+  margin:0 auto;
+  padding:clamp(10px,1.4vh,20px) clamp(12px,1.6vw,26px);
+  display:grid;
+  grid-template-rows:auto minmax(0,1fr) auto;
+  gap:clamp(8px,1.2vh,16px);
+}
+
+/* ---------- header ---------- */
+.topbar{
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
+  align-items:center;
+  gap:12px;
+}
+.today{
+  font-weight:800;
+  font-size:clamp(.8rem,1.35vw,1rem);
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--ink-soft);
+  font-variant-numeric:tabular-nums;
+}
+.title-wrap{display:flex;align-items:center;gap:.5em;justify-content:center}
+h1{
+  font-family:"Grandstander","Nunito",sans-serif;
+  font-weight:800;
+  font-size:clamp(1.5rem,3.1vw,2.5rem);
+  margin:0;
+  letter-spacing:-.01em;
+  text-wrap:balance;
+  line-height:1;
+}
+.sunmark{width:clamp(28px,3.4vw,44px);height:clamp(28px,3.4vw,44px);flex:none}
+.sunmark .ray{transform-origin:50% 50%;animation:spin 34s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.tools{display:flex;justify-content:flex-end}
+.gear{
+  width:38px;height:38px;border-radius:50%;
+  border:1.5px solid var(--line);
+  background:var(--paper);
+  color:var(--ink-soft);
+  display:grid;place-items:center;cursor:pointer;
+  box-shadow:var(--shadow-lift);
+}
+.gear:hover{color:var(--ink)}
+
+/* ---------- split ---------- */
+.split{
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
+  gap:clamp(6px,1vw,14px);
+  min-height:0;
+}
+.seam{
+  width:2px;
+  align-self:stretch;
+  background-image:linear-gradient(var(--line) 60%,transparent 0);
+  background-size:2px 16px;
+  border-radius:2px;
+  opacity:.9;
+}
+.panel{
+  position:relative;
+  min-width:0;
+  background:var(--paper);
+  border:1.5px solid var(--line);
+  border-radius:26px;
+  box-shadow:var(--shadow);
+  padding:clamp(10px,1.5vh,18px) clamp(12px,1.5vw,22px);
+  display:grid;
+  grid-template-rows:auto minmax(0,1fr);
+  gap:clamp(6px,1vh,12px);
+  overflow:hidden;
+}
+.panel[data-kid="zev"]{--kid:var(--zev);--kid-tint:var(--zev-tint)}
+.panel[data-kid="eve"]{--kid:var(--eve);--kid-tint:var(--eve-tint)}
+
+.panel-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.kidname{
+  font-family:"Grandstander","Nunito",sans-serif;
+  font-weight:800;
+  font-size:clamp(1.9rem,4.1vw,3.2rem);
+  line-height:.95;
+  margin:0;
+  color:var(--kid);
+  letter-spacing:.04em;
+}
+.swash{display:block;width:clamp(84px,11vw,150px);height:9px;color:var(--kid);margin-top:2px}
+.tally{
+  font-weight:800;
+  font-size:clamp(.78rem,1.3vw,.98rem);
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--ink-soft);
+  font-variant-numeric:tabular-nums;
+  white-space:nowrap;
+}
+
+.panel-body{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:clamp(8px,1.4vw,20px);min-height:0}
+
+/* ---------- tasks ---------- */
+.tasks{list-style:none;margin:0;padding:0 2px 0 0;display:flex;flex-direction:column;gap:clamp(5px,1.1vh,12px);overflow-y:auto;min-height:0;
+  justify-content:center;justify-content:safe center}
+.task{
+  display:flex;align-items:center;gap:clamp(9px,1.1vw,15px);
+  padding:clamp(8px,1.7vh,20px) clamp(9px,1vw,16px);
+  border-radius:18px;
+  background:var(--paper-tint);
+  border:1.5px solid transparent;
+  cursor:pointer;
+  user-select:none;
+  transition:background .18s ease,border-color .18s ease,transform .12s ease;
+}
+.task:hover{border-color:var(--line)}
+.task:active{transform:scale(.985)}
+.task:focus-visible{outline:3px solid var(--kid);outline-offset:2px}
+.task[aria-checked="true"]{background:var(--kid-tint);border-color:color-mix(in srgb,var(--kid) 30%,transparent)}
+.box{
+  position:relative;flex:none;
+  width:clamp(30px,3.5vw,40px);height:clamp(30px,3.5vw,40px);
+  border-radius:12px;
+  border:2.5px solid color-mix(in srgb,var(--kid) 55%,var(--line));
+  background:var(--paper);
+  display:grid;place-items:center;
+  transition:background .18s ease,border-color .18s ease;
+}
+.box svg{width:68%;height:68%;stroke:var(--paper);stroke-width:3.4;fill:none;stroke-linecap:round;stroke-linejoin:round;
+  stroke-dasharray:26;stroke-dashoffset:26;transition:stroke-dashoffset .26s ease .04s}
+.task[aria-checked="true"] .box{background:var(--kid);border-color:var(--kid)}
+.task[aria-checked="true"] .box svg{stroke-dashoffset:0}
+.task[aria-checked="true"] .box{animation:pop .32s ease}
+@keyframes pop{0%{transform:scale(1)}45%{transform:scale(1.18)}100%{transform:scale(1)}}
+.tico{flex:none;width:clamp(22px,2.5vw,30px);height:clamp(22px,2.5vw,30px);color:var(--kid);opacity:.85}
+.tico svg{width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.tbody{display:flex;flex-direction:column;gap:3px;min-width:0}
+.tlabel{
+  font-weight:700;
+  font-size:clamp(1rem,1.62vw,1.32rem);
+  line-height:1.2;
+  transition:color .18s ease;
+}
+.tsub{font-weight:700;font-size:clamp(.74rem,1.08vw,.92rem);line-height:1.25;color:var(--ink-soft)}
+.choices{display:flex;gap:7px;margin-top:5px;flex-wrap:wrap}
+.pill{
+  font-family:inherit;font-weight:800;font-size:clamp(.72rem,1.02vw,.88rem);
+  padding:5px 13px;border-radius:999px;
+  border:2px solid var(--line);background:var(--paper);color:var(--ink-soft);
+  cursor:pointer;transition:all .16s ease;
+}
+.pill:hover{border-color:var(--kid);color:var(--kid)}
+.pill:focus-visible{outline:3px solid var(--kid);outline-offset:2px}
+.pill.sel{background:var(--kid);border-color:var(--kid);color:var(--paper)}
+.task[aria-checked="true"] .choices{display:none}
+.task.pending .box{border-style:dashed;border-color:var(--kid)}
+.task[aria-checked="true"] .tlabel{color:color-mix(in srgb,var(--ink) 62%,var(--kid))}
+
+/* ---------- bucket ---------- */
+.bucketwrap{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;width:clamp(104px,14vw,196px)}
+.bucket{width:100%;height:auto;display:block;filter:drop-shadow(0 8px 14px rgba(30,35,80,.16))}
+.jstar{transform-box:fill-box;transform-origin:center}
+.jstar.pop{animation:starin .46s cubic-bezier(.2,1.6,.4,1)}
+@keyframes starin{0%{transform:scale(0) rotate(-55deg)}62%{transform:scale(1.18) rotate(7deg)}100%{transform:scale(1) rotate(0)}}
+.starcount{
+  font-family:"Grandstander","Nunito",sans-serif;
+  font-weight:800;font-size:clamp(.85rem,1.5vw,1.15rem);
+  color:var(--sun-deep);font-variant-numeric:tabular-nums;letter-spacing:.06em;
+}
+
+/* ---------- achieved overlay ---------- */
+.achieved{
+  position:absolute;inset:0;
+  display:grid;place-items:center;
+  background:color-mix(in srgb,var(--paper) 88%,var(--sun));
+  border-radius:24px;z-index:8;
+  opacity:0;pointer-events:none;
+  transition:opacity .45s ease;
+}
+.panel.done .achieved{opacity:1;pointer-events:auto;cursor:pointer}
+.panel.done.peek .achieved{opacity:0;pointer-events:none}
+.achieved-in{text-align:center;padding:16px;transform:scale(.92);transition:transform .5s cubic-bezier(.2,1.4,.4,1)}
+.panel.done .achieved-in{transform:scale(1)}
+.achieved .big{
+  font-family:"Grandstander","Nunito",sans-serif;font-weight:800;
+  font-size:clamp(1.7rem,3.6vw,2.9rem);line-height:1.02;color:var(--kid);margin:0;text-wrap:balance;
+}
+.achieved .earned{
+  margin:0 0 .15em;font-weight:800;font-size:clamp(.7rem,1.1vw,.85rem);
+  letter-spacing:.18em;text-transform:uppercase;color:var(--sun-deep);
+  font-variant-numeric:tabular-nums;
+}
+.achieved .prize{
+  display:inline-block;margin:.7em 0 0;
+  font-family:"Grandstander","Nunito",sans-serif;font-weight:800;
+  font-size:clamp(.95rem,1.7vw,1.3rem);line-height:1.15;
+  padding:.42em 1em;border-radius:999px;
+  background:linear-gradient(var(--sun),var(--sun-deep));color:#3A2A05;
+  box-shadow:0 6px 16px rgba(238,155,20,.34);text-wrap:balance;
+}
+.achieved .sub{margin:.6em 0 0;font-weight:700;color:var(--ink-soft);font-size:clamp(.8rem,1.3vw,1rem);max-width:26em;margin-inline:auto}
+.achieved .hint{margin:1.1em 0 0;font-weight:700;font-size:clamp(.72rem,1.1vw,.85rem);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);opacity:.75}
+.achieved .trophy{width:clamp(40px,5.4vw,68px);height:clamp(40px,5.4vw,68px);margin:0 auto .3em;display:block}
+
+/* ---------- reward ---------- */
+.reward{
+  background:var(--paper);
+  border:1.5px solid var(--line);
+  border-radius:22px;
+  box-shadow:var(--shadow);
+  padding:clamp(9px,1.4vh,16px) clamp(14px,1.8vw,26px);
+  display:flex;align-items:center;gap:clamp(12px,2vw,28px);flex-wrap:wrap;
+  position:relative;overflow:hidden;
+}
+.reward::before{
+  content:"";position:absolute;left:0;top:0;bottom:0;width:6px;
+  background:linear-gradient(var(--sun),var(--sun-deep));
+  opacity:0;transition:opacity .4s ease;
+}
+.reward.both::before{opacity:1}
+.rlabel{
+  font-family:"Grandstander","Nunito",sans-serif;font-weight:800;
+  font-size:clamp(.8rem,1.35vw,1rem);letter-spacing:.2em;text-transform:uppercase;color:var(--sun-deep);
+  flex:none;
+}
+.rtext{
+  font-family:"Grandstander","Nunito",sans-serif;font-weight:800;
+  font-size:clamp(1.15rem,2.3vw,1.85rem);line-height:1.1;flex:1 1 240px;min-width:0;text-wrap:balance;
+}
+.rnote{display:block;font-family:"Nunito",sans-serif;font-weight:700;font-size:clamp(.78rem,1.2vw,.94rem);color:var(--ink-soft);letter-spacing:0;margin-top:.25em}
+.chips{display:flex;gap:8px;flex:none}
+.chip{
+  display:flex;align-items:center;gap:7px;
+  padding:7px 14px;border-radius:999px;
+  border:2px solid var(--line);
+  font-weight:800;font-size:clamp(.78rem,1.2vw,.95rem);letter-spacing:.08em;
+  color:var(--ink-soft);
+  transition:all .3s ease;
+}
+.chip[data-kid="zev"].on{border-color:var(--zev);color:var(--zev);background:var(--zev-tint)}
+.chip[data-kid="eve"].on{border-color:var(--eve);color:var(--eve);background:var(--eve-tint)}
+.chip .dot{width:9px;height:9px;border-radius:50%;background:currentColor;opacity:.35}
+.chip.on .dot{opacity:1}
+
+/* ---------- cheer pop-up ---------- */
+.cheer{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;z-index:6}
+.cheer-card{
+  background:var(--paper);
+  border:2.5px solid color-mix(in srgb,var(--kid) 32%,var(--line));
+  border-radius:28px;
+  box-shadow:0 20px 48px rgba(20,25,60,.24);
+  padding:clamp(12px,2vh,20px) clamp(18px,2.2vw,30px) clamp(14px,2.2vh,22px);
+  text-align:center;max-width:min(88%,380px);
+  opacity:0;transform:scale(.66) translateY(16px) rotate(-3deg);
+  transition:transform .38s cubic-bezier(.2,1.55,.4,1),opacity .22s ease;
+}
+.cheer-card.in{opacity:1;transform:scale(1) translateY(0) rotate(0)}
+.cheer-card.out{opacity:0;transform:scale(.9) translateY(-14px)}
+.cheer-msg{
+  font-family:"Grandstander","Nunito",sans-serif;font-weight:800;
+  font-size:clamp(1rem,1.85vw,1.4rem);line-height:1.15;
+  margin:.55em 0 0;color:var(--kid);text-wrap:balance;
+}
+
+/* ---------- animated scenes ---------- */
+.sc{width:clamp(128px,17vw,196px);height:auto;display:block;margin:0 auto}
+.sc *{transform-box:fill-box;transform-origin:center}
+@keyframes fly{0%{opacity:0;transform:translate(0,0) scale(.3)}12%{opacity:1}55%{transform:translate(26px,-26px) scale(1)}100%{opacity:0;transform:translate(52px,-6px) scale(.6)}}
+@keyframes rise{0%{opacity:0;transform:translate(0,8px) scale(.4)}20%{opacity:1}100%{opacity:0;transform:translate(7px,-38px) scale(1)}}
+@keyframes fall{0%{opacity:0;transform:translate(0,-16px) scale(.5)}22%{opacity:1}100%{opacity:0;transform:translate(0,30px) scale(.9)}}
+@keyframes press{0%,100%{transform:translateY(0)}12%{transform:translateY(4px)}26%{transform:translateY(0)}}
+@keyframes sweep{0%,100%{transform:translateX(-7px)}50%{transform:translateX(30px)}}
+@keyframes sweepdown{0%,100%{transform:translateY(-9px) rotate(-5deg)}50%{transform:translateY(16px) rotate(5deg)}}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes beat{0%,100%{transform:scale(1)}50%{transform:scale(1.22)}}
+@keyframes ripple{0%{opacity:0;transform:scale(.4)}25%{opacity:.85}100%{opacity:0;transform:scale(1.7)}}
+@keyframes scribble{to{stroke-dashoffset:0}}
+@keyframes wag{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(8deg)}}
+@keyframes twinkle{0%,100%{opacity:.25;transform:scale(.7)}50%{opacity:1;transform:scale(1.1)}}
+.glint{transform-box:fill-box;transform-origin:center;animation:twinkle 1.8s ease-in-out infinite}
+.fly{animation:fly 1.5s ease-out infinite}
+.rise{animation:rise 1.6s ease-out infinite}
+.fall{animation:fall 1.35s ease-in infinite}
+.sweep{animation:sweep 1.3s ease-in-out infinite}
+.sweepd{animation:sweepdown 1.4s ease-in-out infinite}
+.bob{animation:bob 1.2s ease-in-out infinite}
+.beat{animation:beat 1s ease-in-out infinite}
+.ripple{animation:ripple 1.5s ease-out infinite}
+.wag{animation:wag 1.1s ease-in-out infinite}
+.scribble{animation:scribble 1.1s ease-out .15s forwards}
+.k{transform-origin:top center;animation:press 1.5s ease-in-out infinite}
+
+/* ---------- fx canvas ---------- */
+#fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:50}
+
+/* ---------- parent panel ---------- */
+.sheet{
+  position:fixed;top:64px;right:18px;z-index:60;
+  width:min(300px,calc(100vw - 36px));
+  background:var(--paper);border:1.5px solid var(--line);border-radius:20px;
+  box-shadow:0 20px 50px rgba(20,25,60,.28);
+  padding:16px;
+}
+.sheet h2{margin:0 0 4px;font-family:"Grandstander","Nunito",sans-serif;font-size:1.05rem;font-weight:800}
+.sheet p{margin:0 0 12px;font-size:.82rem;color:var(--ink-soft);font-weight:600;line-height:1.4}
+.sheet label{display:block;font-size:.7rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:6px}
+.sheet select,.sheet button.act{
+  width:100%;font-family:inherit;font-weight:700;font-size:.92rem;color:var(--ink);
+  background:var(--paper-tint);border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;cursor:pointer;
+}
+.sheet button.act{margin-top:10px;text-align:center}
+.sheet button.act:hover{border-color:var(--ink-soft)}
+.sync{margin-top:12px;font-size:.72rem;font-weight:700;color:var(--ink-soft);display:flex;align-items:center;gap:6px}
+.sync .dot{width:8px;height:8px;border-radius:50%;background:var(--ink-soft);flex:none}
+.sync.live .dot{background:var(--zev)}
+
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.06s !important}
+}
+@media (max-width:720px){
+  body{overflow:auto}
+  .app{height:auto;min-height:100svh}
+  .split{grid-template-columns:1fr}
+  .seam{width:auto;height:2px;background-image:linear-gradient(90deg,var(--line) 60%,transparent 0);background-size:16px 2px}
+  .panel-body{grid-template-columns:minmax(0,1fr)}
+  .bucketwrap{flex-direction:row;align-items:center;justify-content:center;width:100%;gap:14px}
+  .bucket{width:110px}
+}
+</style>
+
+<div class="app">
+  <header class="topbar">
+    <div class="today" id="todayLabel">Tuesday</div>
+    <div class="title-wrap">
+      <svg class="sunmark" viewBox="0 0 48 48" aria-hidden="true">
+        <g class="ray" fill="none" stroke="#EE9B14" stroke-width="3" stroke-linecap="round">
+          <path d="M24 4v5M24 39v5M4 24h5M39 24h5M10 10l3.5 3.5M34.5 34.5 38 38M38 10l-3.5 3.5M13.5 34.5 10 38"/>
+        </g>
+        <circle cx="24" cy="24" r="10.5" fill="#FFC13B"/>
+      </svg>
+      <h1>Morning Routine</h1>
+    </div>
+    <div class="tools">
+      <button class="gear" id="gearBtn" aria-label="Grown-up settings">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="3.2"/>
+          <path d="M19.4 15a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.87-.34 1.7 1.7 0 0 0-1.03 1.56V21a2 2 0 1 1-4 0v-.11A1.7 1.7 0 0 0 9 19.4a1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-1.56-1.03H3a2 2 0 1 1 0-4h.11A1.7 1.7 0 0 0 4.6 9a1.7 1.7 0 0 0-.34-1.87l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.7 1.7 0 0 0 9 4.6h.08A1.7 1.7 0 0 0 10.1 3.04V3a2 2 0 1 1 4 0v.11a1.7 1.7 0 0 0 1.03 1.56 1.7 1.7 0 0 0 1.87-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.7 1.7 0 0 0 19.4 9v.08a1.7 1.7 0 0 0 1.56 1.03H21a2 2 0 1 1 0 4h-.11a1.7 1.7 0 0 0-1.49 1.03z"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <main class="split">
+    <section class="panel" data-kid="zev">
+      <div class="panel-head">
+        <div>
+          <h2 class="kidname">ZEV</h2>
+          <svg class="swash" viewBox="0 0 150 9" preserveAspectRatio="none" aria-hidden="true"><path d="M2 6.2c22-5.4 44-5.4 66 0s44 5.4 66 0" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"/></svg>
+        </div>
+        <div class="tally" id="tally-zev">0 of 4 done</div>
+      </div>
+      <div class="panel-body">
+        <ul class="tasks" id="tasks-zev"></ul>
+        <div class="bucketwrap">
+          <div id="bucket-zev"></div>
+          <div class="starcount" id="stars-zev">0 stars</div>
+        </div>
+      </div>
+      <div class="cheer" id="cheer-zev" hidden></div>
+      <div class="achieved" id="achieved-zev">
+        <div class="achieved-in">
+          <svg class="trophy" viewBox="0 0 64 64" aria-hidden="true">
+            <path d="M32 6 39.4 21l16.6 2.4-12 11.7 2.8 16.5L32 43.8 17.2 51.6 20 35.1 8 23.4 24.6 21z" fill="#FFC13B" stroke="#EE9B14" stroke-width="2.4" stroke-linejoin="round"/>
+          </svg>
+          <p class="earned" id="achievedstars-zev"></p>
+          <p class="big">Reward Achieved</p>
+          <p class="prize" id="achievedprize-zev"></p>
+          <p class="sub" id="achievedsub-zev"></p>
+          <p class="hint">Tap to see the list</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="seam" aria-hidden="true"></div>
+
+    <section class="panel" data-kid="eve">
+      <div class="panel-head">
+        <div>
+          <h2 class="kidname">EVE</h2>
+          <svg class="swash" viewBox="0 0 150 9" preserveAspectRatio="none" aria-hidden="true"><path d="M2 6.2c22-5.4 44-5.4 66 0s44 5.4 66 0" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"/></svg>
+        </div>
+        <div class="tally" id="tally-eve">0 of 5 done</div>
+      </div>
+      <div class="panel-body">
+        <ul class="tasks" id="tasks-eve"></ul>
+        <div class="bucketwrap">
+          <div id="bucket-eve"></div>
+          <div class="starcount" id="stars-eve">0 stars</div>
+        </div>
+      </div>
+      <div class="cheer" id="cheer-eve" hidden></div>
+      <div class="achieved" id="achieved-eve">
+        <div class="achieved-in">
+          <svg class="trophy" viewBox="0 0 64 64" aria-hidden="true">
+            <path d="M32 6 39.4 21l16.6 2.4-12 11.7 2.8 16.5L32 43.8 17.2 51.6 20 35.1 8 23.4 24.6 21z" fill="#FFC13B" stroke="#EE9B14" stroke-width="2.4" stroke-linejoin="round"/>
+          </svg>
+          <p class="earned" id="achievedstars-eve"></p>
+          <p class="big">Reward Achieved</p>
+          <p class="prize" id="achievedprize-eve"></p>
+          <p class="sub" id="achievedsub-eve"></p>
+          <p class="hint">Tap to see the list</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="reward" id="rewardBar">
+    <span class="rlabel">Reward</span>
+    <div class="rtext" id="rewardText">Educational screen time<span class="rnote" id="rewardNote"></span></div>
+    <div class="chips">
+      <div class="chip" data-kid="zev" id="chip-zev"><span class="dot"></span>ZEV</div>
+      <div class="chip" data-kid="eve" id="chip-eve"><span class="dot"></span>EVE</div>
+    </div>
+  </footer>
+</div>
+
+<canvas id="fx" aria-hidden="true"></canvas>
+
+<div class="sheet" id="sheet" hidden>
+  <h2>Grown-up controls</h2>
+  <p>Checks save automatically and start fresh each morning.</p>
+  <label for="daySel">Show the list for</label>
+  <select id="daySel">
+    <option value="auto">Today</option>
+    <option value="1">Monday</option>
+    <option value="2">Tuesday</option>
+    <option value="3">Wednesday</option>
+    <option value="4">Thursday</option>
+    <option value="5">Friday</option>
+    <option value="6">Saturday</option>
+    <option value="0">Sunday</option>
+  </select>
+  <button class="act" id="resetBtn">Clear today's checks</button>
+  <div class="sync" id="syncNote"><span class="dot"></span><span id="syncText">Connecting…</span></div>
+</div>
+
+<!-- ============ Firebase: shared cross-device storage ============
+     This project is shared by every page in the family hub (bank, routine,
+     chores, grocery list, …), each writing to its own Firestore collection.
+     Every device signs in anonymously just to satisfy the security rules —
+     there is no per-person login, the whole family reads and writes the
+     same documents. The shim below exposes a tiny `.doc(path).set()` /
+     `.onSnapshot()` surface so the rest of this page (unchanged from the
+     original artifact) doesn't need to know it's talking to Firebase. -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+  import {
+    getFirestore, doc, setDoc, onSnapshot
+  } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+  import {
+    getAuth, signInAnonymously, onAuthStateChanged
+  } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+
+  var firebaseConfig = {
+    apiKey: "AIzaSyC-3RaR0DtRUHXOs2ZziYw3rcoY0oUMFNA",
+    authDomain: "familyhub-7ce5b.firebaseapp.com",
+    projectId: "familyhub-7ce5b",
+    storageBucket: "familyhub-7ce5b.firebasestorage.app",
+    messagingSenderId: "430624150535",
+    appId: "1:430624150535:web:ee6e142bb4f33d3c9b06a2"
+  };
+
+  var app = initializeApp(firebaseConfig);
+  var firestore = getFirestore(app);
+  var auth = getAuth(app);
+
+  function makeDbShim(){
+    return {
+      doc: function(path){
+        var ref = doc(firestore, path);
+        return {
+          set: function(data){ return setDoc(ref, data); },
+          onSnapshot: function(onNext, onError){
+            return onSnapshot(ref, function(snap){
+              onNext({ exists: snap.exists(), data: function(){ return snap.data(); } });
+            }, onError);
+          }
+        };
+      }
+    };
+  }
+
+  onAuthStateChanged(auth, function(user){
+    if(user){
+      window.__familyDb = makeDbShim();
+      window.dispatchEvent(new Event('family-db-ready'));
+    }
+  });
+  signInAnonymously(auth).catch(function(){
+    window.dispatchEvent(new Event('family-db-error'));
+  });
+</script>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------------- icons ---------------- */
+  var ICON = {
+    teeth:'<path d="M6.2 4.8c1.7-1.2 3.3-.4 5.8-.4s4.1-.8 5.8.4c1.6 1.2 1.3 3.6.6 5.6-.6 1.7-.8 3-1.1 5-.2 1.5-.5 2.8-1.5 2.8-1.2 0-1.2-2.2-1.6-4-.3-1.3-.6-2-2.2-2s-1.9.7-2.2 2c-.4 1.8-.4 4-1.6 4-1 0-1.3-1.3-1.5-2.8-.3-2-.5-3.3-1.1-5-.7-2-1-4.4.6-5.6z"/>',
+    piano:'<rect x="3" y="5.5" width="18" height="13" rx="2.2"/><path d="M8 5.5v7M12 5.5v7M16 5.5v7M3 12.5h18"/>',
+    water:'<path d="M12 3.5c3.2 3.7 5.5 6.2 5.5 8.9a5.5 5.5 0 1 1-11 0c0-2.7 2.3-5.2 5.5-8.9z"/>',
+    pig:'<path d="M3.8 13.9c0-3.2 2.8-5.7 6.4-5.7h3.4c3.4 0 6.2 2.2 6.2 5s-2.6 5.1-6.2 5.1H9.8c-3.3 0-6-2-6-4.4z"/><path d="M9.4 8.5c-.9-1.6-.8-3.1.3-3.6 1.1-.5 2.2.4 2.6 2"/><circle cx="16.9" cy="12.4" r=".95" fill="currentColor" stroke="none"/>',
+    pigwater:'<path d="M2.6 14.6c0-3 2.6-5.3 6-5.3h3.2c3.2 0 5.8 2 5.8 4.7s-2.4 4.8-5.8 4.8H8.3c-3.1 0-5.7-1.9-5.7-4.2z"/><path d="M7.9 9.6c-.8-1.5-.7-2.9.3-3.4 1-.4 2.1.4 2.4 1.9"/><circle cx="15.1" cy="13.2" r=".9" fill="currentColor" stroke="none"/><path d="M19.9 3.2c1.5 1.8 2.5 2.9 2.5 4a2.5 2.5 0 0 1-5 0c0-1.1 1-2.2 2.5-4z"/>',
+    brush:'<path d="M9.6 3.6h4.8a2 2 0 0 1 2 2v5.6a4.4 4.4 0 0 1-8.8 0V5.6a2 2 0 0 1 2-2z"/><path d="M12 15.6v4.8"/><path d="M10.2 6.6v2M12 6.6v2M13.8 6.6v2"/>',
+    book:'<path d="M3.5 5.6c2.8-1.1 5.6-1.1 8.5.5 2.9-1.6 5.7-1.6 8.5-.5v11.9c-2.8-1.1-5.6-1.1-8.5.5-2.9-1.6-5.7-1.6-8.5-.5z"/><path d="M12 6.1v12"/>',
+    basket:'<path d="M4.4 9h15.2l-1.4 9.2a1.7 1.7 0 0 1-1.7 1.4H7.5a1.7 1.7 0 0 1-1.7-1.4z"/><path d="M3.2 9h17.6"/><path d="M9 12.4v4M12 12.4v4M15 12.4v4"/>',
+    broom:'<path d="M18.6 4.4 12 11"/><path d="M11.2 10.2 15.8 14.8l-3.5 3.5a2.6 2.6 0 0 1-3.7 0l-1-1a2.6 2.6 0 0 1 0-3.7z"/><path d="M9.6 12l4.6 4.6"/>',
+    house:'<path d="M3.8 11.2 12 4.4l8.2 6.8"/><path d="M6 10.2V19.6h12V10.2"/><path d="M10 19.6v-5h4v5"/>',
+    phone:'<path d="M7.4 3.9h3.1l1.4 3.6-2 1.6a11.2 11.2 0 0 0 5 5l1.6-2 3.6 1.4v3.1a2.5 2.5 0 0 1-2.7 2.5C11.2 18.6 5.4 12.8 4.9 6.6A2.5 2.5 0 0 1 7.4 3.9z"/>'
+  };
+
+  /* ---------------- the routine ---------------- */
+  var PIANO = {
+    id:'piano', label:'Practice piano', icon:'piano', type:'choice',
+    ask:'Did you practice yesterday afternoon?',
+    yesLabel:'Yes', noLabel:'Not yet',
+    doneYesterday:'Practiced yesterday afternoon.',
+    pending:'Practice now, then tick the box.',
+    doneMorning:'Practiced this morning.'
+  };
+  var WEEKDAY = {
+    zev:[
+      {id:'teeth', label:'Brush teeth', icon:'teeth'},
+      PIANO,
+      {id:'pigwater', label:'Guinea pig water', icon:'pigwater'},
+      {id:'homework', label:'Homework', icon:'book'}
+    ],
+    eve:[
+      {id:'teeth', label:'Brush teeth', icon:'teeth'},
+      {id:'hair', label:'Brush hair', icon:'brush'},
+      PIANO,
+      {id:'pigfood', label:'Guinea pig food', icon:'pig'},
+      {id:'homework', label:'Homework', icon:'book'}
+    ]
+  };
+  var WEEKEND_LIST = [
+    {id:'laundry', label:'Sort laundry', icon:'basket'},
+    {id:'room', label:'Clean room', icon:'broom'},
+    {id:'household', label:'Other household contribution', icon:'house'},
+    {id:'relative', label:'Call a relative', icon:'phone'}
+  ];
+  var WEEKEND = {zev:WEEKEND_LIST, eve:WEEKEND_LIST};
+
+  var DAY_NAMES = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  var MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var KIDS = ['zev','eve'];
+  var TOTAL_STARS = 20;   /* a full bucket is 20 stars for both of them, however many tasks they have */
+
+  function ymd(d){
+    return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+  }
+
+  /* The Saturday jobs earn Sunday's screen time, so Sunday reads Saturday's card. */
+  function planFor(date){
+    var dow = date.getDay();
+    var anchor = new Date(date.getTime());
+    var weekend = (dow === 0 || dow === 6);
+    if(dow === 0){ anchor.setDate(anchor.getDate() - 1); }
+
+    var plan = {
+      dow: dow,
+      weekend: weekend,
+      key: ymd(anchor),
+      tasks: weekend ? WEEKEND : WEEKDAY,
+      headline: DAY_NAMES[dow] + ' · ' + MONTHS[date.getMonth()] + ' ' + date.getDate()
+    };
+
+    if(dow === 0){
+      plan.reward = 'Non-educational screen time';
+      plan.note = 'Earned by Saturday morning’s jobs — tick anything still outstanding.';
+      plan.achievedSub = 'Sunday screen time is yours.';
+    } else if(dow === 6){
+      plan.reward = 'Sunday’s screen time';
+      plan.note = 'Saturday jobs earn tomorrow’s non-educational screen time — none today.';
+      plan.achievedSub = 'Sunday’s screen time is earned.';
+    } else if(dow === 3){
+      plan.reward = 'Non-educational screen time';
+      plan.note = 'Wednesday — anything you like on the screen.';
+      plan.achievedSub = 'Screen time is yours.';
+    } else {
+      plan.reward = 'Educational screen time';
+      plan.note = 'Learning apps and shows.';
+      plan.achievedSub = 'Screen time is yours.';
+    }
+    return plan;
+  }
+
+  /* ---------------- state ---------------- */
+  var override = null;              // day-of-week number, or null for today
+  var plan = null;
+  var state = {zev:{}, eve:{}};
+  var db = null, unsub = null, adopting = false;
+  var wasDone = {zev:false, eve:false};
+  var booting = true;
+
+  function effectiveDate(){
+    var now = new Date();
+    if(override === null) return now;
+    var d = new Date(now.getTime());
+    d.setDate(d.getDate() + ((override - now.getDay() + 7) % 7));
+    return d;
+  }
+  function lsKey(){ return 'morning-routine:' + plan.key; }
+  function readLocal(){
+    try{
+      var raw = localStorage.getItem(lsKey());
+      if(!raw) return {zev:{},eve:{}};
+      var p = JSON.parse(raw);
+      return {zev:p.zev||{}, eve:p.eve||{}};
+    }catch(e){ return {zev:{},eve:{}}; }
+  }
+  function writeLocal(){
+    try{ localStorage.setItem(lsKey(), JSON.stringify({zev:state.zev, eve:state.eve})); }catch(e){}
+  }
+  function pushRemote(){
+    if(!db) return;
+    try{
+      db.doc('progress/' + plan.key).set({zev:state.zev, eve:state.eve, updatedAt:new Date().toISOString()})
+        .catch(function(){});
+    }catch(e){}
+  }
+  function anyChecked(){
+    return KIDS.some(function(k){ return Object.keys(state[k]).some(function(t){ return state[k][t]; }); });
+  }
+
+  /* ---------------- the star jar ----------------
+     A real glass jar you can see into, holding 20 separate stars. Each tick
+     drops another star onto the pile rather than raising a level of liquid. */
+  var JAR_SLOTS = (function(){
+    /* jittered on purpose — level rows read as a grid, not a pile */
+    var rows = [
+      {y:152, x:[38, 55, 72, 89], dy:[ 1, -2,  2, -1], r:[-11,  8,  -5, 13], s:[9.4, 8.7, 9.2, 8.6]},
+      {y:134, x:[37, 54, 71, 88], dy:[-2,  2, -1,  2], r:[  9, -7,  12, -5], s:[8.8, 9.4, 8.6, 9.1]},
+      {y:116, x:[39, 56, 72, 88], dy:[ 2, -1,  2, -2], r:[ -6, 11,  -9,  6], s:[9.2, 8.6, 9.3, 8.8]},
+      {y: 98, x:[37, 54, 71, 89], dy:[-1,  2, -2,  1], r:[  7,-10,   5, -8], s:[8.7, 9.3, 8.9, 9.2]},
+      {y: 80, x:[38, 55, 72, 88], dy:[ 2, -2,  1, -1], r:[ -8,  6, -11,  9], s:[9.1, 8.8, 9.4, 8.7]}
+    ];
+    var out = [], i, j, order = [1, 2, 0, 3];   /* each row settles middle-out */
+    for(i=0;i<rows.length;i++){
+      for(j=0;j<order.length;j++){
+        var c = order[j];
+        out.push({x:rows[i].x[c], y:rows[i].y + rows[i].dy[c], rot:rows[i].r[c], size:rows[i].s[c]});
+      }
+    }
+    return out;
+  })();
+
+  function starPoints(r){
+    var pts = [], i, ang, rad;
+    for(i=0;i<10;i++){
+      ang = (Math.PI/5)*i - Math.PI/2;
+      rad = (i%2===0) ? r : r*0.45;
+      pts.push((Math.cos(ang)*rad).toFixed(1)+','+(Math.sin(ang)*rad).toFixed(1));
+    }
+    return pts.join(' ');
+  }
+
+  function jarSVG(kid){
+    var s = kid, i, slot;
+    /* mason jar: narrow neck, sloping shoulders, straight sides, rounded base */
+    var jar = 'M33 40V54C33 62 14 64 14 78V148A16 16 0 0 0 30 164H90A16 16 0 0 0 106 148V78'
+            + 'C106 64 87 62 87 54V40A27 7 0 0 1 33 40Z';
+    var stars = '';
+    for(i=0;i<JAR_SLOTS.length;i++){
+      slot = JAR_SLOTS[i];
+      stars += '<g transform="translate('+slot.x+' '+slot.y+') rotate('+slot.rot+')">'
+        + '<polygon class="jstar" id="js-'+s+'-'+i+'" opacity="0" points="'+starPoints(slot.size)+'" '
+        + 'fill="url(#star-'+s+')" stroke="#D5890C" stroke-width="1.4" stroke-linejoin="round"/></g>';
+    }
+    return '<svg class="bucket" viewBox="0 0 120 176" role="img" aria-label="Jar of stars">'
+      + '<defs>'
+      +   '<clipPath id="jar-'+s+'"><path d="'+jar+'"/></clipPath>'
+      +   '<linearGradient id="star-'+s+'" x1="0" y1="0" x2="0" y2="1">'
+      +     '<stop offset="0" stop-color="#FFE07A"/><stop offset="1" stop-color="#FFB121"/>'
+      +   '</linearGradient>'
+      + '</defs>'
+      + '<ellipse cx="60" cy="168" rx="36" ry="5" fill="#2B2F55" opacity=".10"/>'
+      + '<path d="'+jar+'" fill="#F4F7FF"/>'
+      + '<g clip-path="url(#jar-'+s+')">'
+      +   '<ellipse cx="60" cy="40" rx="27" ry="7" fill="#E2E9F9"/>'
+      +   stars
+      +   '<rect x="14" y="30" width="92" height="140" fill="#AFC2EA" opacity=".13"/>'
+      +   '<path d="M22 86V142" stroke="#FFFFFF" stroke-width="6" opacity=".55" stroke-linecap="round" fill="none"/>'
+      +   '<path d="M99 98V126" stroke="#FFFFFF" stroke-width="3.5" opacity=".3" stroke-linecap="round" fill="none"/>'
+      + '</g>'
+      + '<path d="'+jar+'" fill="none" stroke="#5B5A8A" stroke-width="5" stroke-linejoin="round"/>'
+      + '<ellipse cx="60" cy="40" rx="27" ry="7" fill="none" stroke="#5B5A8A" stroke-width="5"/>'
+      + '<path d="M33 46.5H87M33 52H87" stroke="#5B5A8A" stroke-width="2.6" stroke-linecap="round" opacity=".4" fill="none"/>'
+      + '<g id="glints-'+s+'" opacity="0" fill="#FFD764">'
+      +   glintAt(16, 34, 0.9, 0) + glintAt(104, 30, 1, 0.5) + glintAt(60, 18, 0.75, 1)
+      + '</g>'
+      + '</svg>';
+  }
+  function glintAt(x, y, s, delay){
+    return '<g transform="translate('+x+' '+y+') scale('+s+')">'
+      + '<path class="glint" style="animation-delay:'+delay+'s" '
+      + 'd="M0 -8C1 -2.8 2.8 -1 8 0 2.8 1 1 2.8 0 8-1 2.8-2.8 1-8 0-2.8-1-1-2.8 0-8Z"/></g>';
+  }
+  function starAt(cx,cy,r){
+    var pts=[], i, ang, rad;
+    for(i=0;i<10;i++){
+      ang = (Math.PI/5)*i - Math.PI/2;
+      rad = (i%2===0) ? r : r*0.44;
+      pts.push((cx+Math.cos(ang)*rad).toFixed(1)+','+(cy+Math.sin(ang)*rad).toFixed(1));
+    }
+    return '<polygon points="'+pts.join(' ')+'"/>';
+  }
+  /* show the first n stars; any that are newly arriving drop in with a pop */
+  function setStars(kid, n, animate){
+    var i, el, on;
+    for(i=0;i<JAR_SLOTS.length;i++){
+      el = document.getElementById('js-'+kid+'-'+i);
+      if(!el) continue;
+      on = el.getAttribute('data-on') === '1';
+      if(i < n && !on){
+        el.setAttribute('data-on','1');
+        el.setAttribute('opacity','1');
+        if(animate && !reduce){
+          el.classList.remove('pop');
+          (function(node){ requestAnimationFrame(function(){ node.classList.add('pop'); }); })(el);
+        }
+      } else if(i >= n && on !== false){
+        el.setAttribute('data-on','0');
+        el.setAttribute('opacity','0');
+        el.classList.remove('pop');
+      }
+    }
+    var g = document.getElementById('glints-'+kid);
+    if(g) g.setAttribute('opacity', n >= JAR_SLOTS.length ? '1' : '0');
+  }
+
+  /* ---------------- the daily flourish ----------------
+     The little shapes that fly around change every day, so the same task
+     looks different on Monday and Tuesday. */
+  var BIT_PATH = {
+    star:'M0 -10 2.9 -3.2 10 -3.1 4.3 1.3 6.2 8.2 0 4.1 -6.2 8.2 -4.3 1.3 -10 -3.1 -2.9 -3.2Z',
+    heart:'M0 6.6C-7 .2 -11.2 -4.4 -7.2 -8.9 -4.2 -12.2 0 -10.2 0 -7.1 0 -10.2 4.2 -12.2 7.2 -8.9 11.2 -4.4 7 .2 0 6.6Z',
+    sparkle:'M0 -10C1.2 -3.4 3.4 -1.2 10 0 3.4 1.2 1.2 3.4 0 10 -1.2 3.4 -3.4 1.2 -10 0 -3.4 -1.2 -1.2 -3.4 0 -10Z',
+    confetti:'M-4.5 -7.5H4.5A2.5 2.5 0 0 1 7 -5V5A2.5 2.5 0 0 1 4.5 7.5H-4.5A2.5 2.5 0 0 1 -7 5V-5A2.5 2.5 0 0 1 -4.5 -7.5Z',
+    bubble:'M-9 0A9 9 0 1 1 9 0A9 9 0 1 1 -9 0Z'
+  };
+  var BIT_COLORS = {
+    star:['#FFC13B','#FFE08A','#F5A623','#FFF0C8','#FF9F45'],
+    heart:['#FF6F9C','#FF9EBC','#F0447B','#FFC7D8','#FF8AAE'],
+    sparkle:['#3FB8DC','#67D3EC','#A7E8F7','#7FD8D2','#D5F3FB'],
+    confetti:['#9B7FE0','#FFC13B','#7FD8D2','#FF8FB1','#8ED17A'],
+    bubble:['#4FC3BB','#7FD8D2','#BFEDE9','#9AE3DC','#E6FAF8']
+  };
+  var FLOURISH = ['star','heart','sparkle','confetti','bubble'];
+
+  function dayIndex(){
+    var d = effectiveDate();
+    return Math.floor(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) / 86400000);
+  }
+  function todayKind(){ return FLOURISH[dayIndex() % FLOURISH.length]; }
+  function bitColor(kind, i){ var a = BIT_COLORS[kind]; return a[i % a.length]; }
+
+  /* one flying shape: the <g> places it, the <path> inside does the moving */
+  function bit(kind, x, y, scale, color, cls, delay){
+    return '<g transform="translate('+x+' '+y+') scale('+scale+')">'
+      + '<path class="'+cls+'" d="'+BIT_PATH[kind]+'" fill="'+color+'" style="animation-delay:'+delay+'s"/>'
+      + '</g>';
+  }
+  function svgScene(inner){
+    return '<svg viewBox="0 0 160 110" class="sc" aria-hidden="true">' + inner + '</svg>';
+  }
+  function pigArt(x, y){
+    return '<g transform="translate('+x+' '+y+')">'
+      + '<ellipse cx="34" cy="30" rx="34" ry="22" fill="#C9A07A"/>'
+      + '<ellipse cx="18" cy="26" rx="15" ry="11" fill="#E8D3BC"/>'
+      + '<circle cx="62" cy="20" r="15" fill="#C9A07A"/>'
+      + '<ellipse class="wag" cx="55" cy="7" rx="6.5" ry="5" fill="#B0876A"/>'
+      + '<circle cx="68" cy="16" r="2.6" fill="#3A2E4A"/>'
+      + '<ellipse cx="75" cy="24" rx="3.4" ry="2.6" fill="#D9758C"/>'
+      + '</g>';
+  }
+  function miniBucket(x, y){
+    return '<g transform="translate('+x+' '+y+')">'
+      + '<path d="M0 6 4 36a12 5 0 0 0 20 0L28 6" fill="#E7ECFB" stroke="#5B5A8A" stroke-width="3" stroke-linejoin="round"/>'
+      + '<ellipse cx="14" cy="6" rx="14" ry="5" fill="#D3DBF2" stroke="#5B5A8A" stroke-width="3"/>'
+      + '</g>';
+  }
+
+  /* ---------------- one little scene per task ---------------- */
+  var SCENE = {
+    teeth: function(k){
+      return svgScene(
+        '<circle cx="50" cy="54" r="32" fill="#FFD9A8"/>'
+      + '<circle cx="40" cy="44" r="3.4" fill="#3A2E4A"/><circle cx="62" cy="44" r="3.4" fill="#3A2E4A"/>'
+      + '<path d="M33 61a18 14 0 0 0 36 0z" fill="#C6486B"/>'
+      + '<rect x="33" y="57" width="36" height="7" rx="2.5" fill="#FFFFFF"/>'
+      + '<path d="M42 57v7M51 57v7M60 57v7" stroke="#DCE3F5" stroke-width="1.4"/>'
+      + '<g class="sweep"><rect x="22" y="70" width="28" height="6" rx="3" fill="#5AB6E8"/>'
+      +   '<rect x="17" y="68" width="9" height="10" rx="3" fill="#7FD8D2"/></g>'
+      + miniBucket(108, 46)
+      + bit(k,72,58,.8,bitColor(k,0),'fly',0)
+      + bit(k,72,58,.8,bitColor(k,1),'fly',.35)
+      + bit(k,72,58,.8,bitColor(k,2),'fly',.7));
+    },
+    piano: function(k){
+      var keys = '', black = '', i, bx = [30,48,84,102,120];
+      for(i=0;i<7;i++){
+        keys += '<rect class="k" x="'+(18+i*18)+'" y="58" width="16" height="34" rx="3" fill="#FFFDF6" style="animation-delay:'+(i*0.11)+'s"/>';
+      }
+      for(i=0;i<bx.length;i++){
+        black += '<rect x="'+bx[i]+'" y="58" width="10" height="21" rx="2.5" fill="#2E2B4A"/>';
+      }
+      return svgScene('<rect x="12" y="52" width="136" height="44" rx="7" fill="#3A3560"/>' + keys + black
+      + bit(k,40,44,.8,bitColor(k,0),'rise',0)
+      + bit(k,80,40,.95,bitColor(k,1),'rise',.4)
+      + bit(k,118,44,.8,bitColor(k,2),'rise',.8));
+    },
+    pigwater: function(k){
+      return svgScene(pigArt(16, 42)
+      + '<rect x="110" y="14" width="28" height="34" rx="10" fill="#CFEBF7" stroke="#5B5A8A" stroke-width="3"/>'
+      + '<path d="M124 48v10" stroke="#5B5A8A" stroke-width="4" stroke-linecap="round"/>'
+      + '<ellipse cx="118" cy="94" rx="24" ry="7" fill="#BFE6F5" stroke="#5B5A8A" stroke-width="3"/>'
+      + bit(k,124,66,.6,bitColor(k,0),'fall',0)
+      + bit(k,124,66,.6,bitColor(k,1),'fall',.45)
+      + bit(k,124,66,.6,bitColor(k,2),'fall',.9));
+    },
+    pigfood: function(k){
+      return svgScene(pigArt(10, 46)
+      + '<g class="bob"><path d="M122 30 136 38 114 64 108 52z" fill="#F08A3C"/>'
+      +   '<path d="M122 30c4-8 12-11 18-9-2 7-9 11-15 11z" fill="#6BBF6B"/></g>'
+      + bit(k,100,40,.7,bitColor(k,0),'fall',0)
+      + bit(k,112,34,.7,bitColor(k,1),'fall',.5)
+      + bit(k,92,32,.6,bitColor(k,2),'fall',.9));
+    },
+    hair: function(k){
+      return svgScene(
+        '<path d="M48 52a32 32 0 0 1 64 0v42a9 9 0 0 1-14 0V62H62v32a9 9 0 0 1-14 0z" fill="#8B5A3C"/>'
+      + '<circle cx="80" cy="52" r="27" fill="#FFD9A8"/>'
+      + '<path d="M48 48a32 32 0 0 1 64 0v6c-6-13-18-18-32-18s-26 5-32 18z" fill="#8B5A3C"/>'
+      + '<circle cx="71" cy="50" r="3.2" fill="#3A2E4A"/><circle cx="89" cy="50" r="3.2" fill="#3A2E4A"/>'
+      + '<path d="M72 62a9 7 0 0 0 16 0" fill="none" stroke="#B85C74" stroke-width="3" stroke-linecap="round"/>'
+      + '<g class="sweepd"><rect x="114" y="38" width="16" height="26" rx="6" fill="#E86FA0"/>'
+      +   '<rect x="119" y="62" width="6" height="18" rx="3" fill="#E86FA0"/>'
+      +   '<path d="M118 44v6M122 44v6M126 44v6" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"/></g>'
+      + bit(k,50,28,.7,bitColor(k,0),'rise',.1)
+      + bit(k,106,22,.7,bitColor(k,1),'rise',.6));
+    },
+    homework: function(k){
+      return svgScene(
+        '<path d="M12 32c22-9 45-9 68 4 23-13 46-13 68-4v52c-22-9-45-9-68 4-23-13-46-13-68-4z" fill="#FFFDF6" stroke="#5B5A8A" stroke-width="3" stroke-linejoin="round"/>'
+      + '<path d="M80 36v52" stroke="#5B5A8A" stroke-width="3"/>'
+      + '<path class="scribble" d="M22 50h44M22 62h38M22 74h44" stroke="#9DB0E0" stroke-width="3.5" stroke-linecap="round" stroke-dasharray="132" stroke-dashoffset="132"/>'
+      + '<path class="scribble" d="M94 50h44M94 62h38" stroke="#9DB0E0" stroke-width="3.5" stroke-linecap="round" stroke-dasharray="92" stroke-dashoffset="92" style="animation-delay:.55s"/>'
+      + bit(k,134,24,.8,bitColor(k,0),'rise',.2)
+      + bit(k,26,22,.7,bitColor(k,1),'rise',.7));
+    },
+    laundry: function(k){
+      return svgScene(
+        '<path d="M34 48h92l-9 44a10 10 0 0 1-10 8H53a10 10 0 0 1-10-8z" fill="#E7ECFB" stroke="#5B5A8A" stroke-width="3" stroke-linejoin="round"/>'
+      + '<path d="M28 48h104" stroke="#5B5A8A" stroke-width="5" stroke-linecap="round"/>'
+      + '<path d="M58 62v28M80 62v28M102 62v28" stroke="#C3CCE8" stroke-width="3" stroke-linecap="round"/>'
+      + '<g class="fall"><path d="M52 16h20v14a10 10 0 0 1-20 0z" fill="#7FD8D2"/></g>'
+      + '<g class="fall" style="animation-delay:.6s"><path d="M94 12 112 19 105 36 87 29z" fill="#FF9FBC"/></g>'
+      + bit(k,124,20,.7,bitColor(k,0),'rise',.3));
+    },
+    room: function(k){
+      return svgScene(
+        '<path d="M16 94h128" stroke="#C3CCE8" stroke-width="4" stroke-linecap="round"/>'
+      + '<g class="sweep"><path d="M106 14 76 54" stroke="#B98A5E" stroke-width="6" stroke-linecap="round"/>'
+      +   '<path d="M74 50 94 66 76 88a10 10 0 0 1-14-2l-5-7a10 10 0 0 1 2-13z" fill="#F0B44C" stroke="#B98A5E" stroke-width="3" stroke-linejoin="round"/>'
+      +   '<path d="M64 60 84 76" stroke="#B98A5E" stroke-width="3"/></g>'
+      + bit(k,36,76,.7,bitColor(k,0),'rise',.1)
+      + bit(k,24,60,.6,bitColor(k,1),'rise',.6)
+      + bit(k,128,74,.7,bitColor(k,2),'rise',.35));
+    },
+    household: function(k){
+      return svgScene(
+        '<g transform="translate(80 20) scale(1.5)"><path class="beat" d="'+BIT_PATH.heart+'" fill="#E8748C"/></g>'
+      + '<path d="M80 36 142 76H18z" fill="#E8748C"/>'
+      + '<rect x="36" y="74" width="88" height="32" rx="6" fill="#FFF3E2" stroke="#5B5A8A" stroke-width="3"/>'
+      + '<rect x="70" y="86" width="22" height="20" rx="3" fill="#C9A07A"/>'
+      + '<rect x="46" y="82" width="16" height="13" rx="3" fill="#BFE6F5" stroke="#5B5A8A" stroke-width="2"/>'
+      + '<rect x="100" y="82" width="16" height="13" rx="3" fill="#BFE6F5" stroke="#5B5A8A" stroke-width="2"/>'
+      + bit(k,24,34,.7,bitColor(k,0),'rise',.2)
+      + bit(k,138,32,.7,bitColor(k,1),'rise',.7));
+    },
+    relative: function(k){
+      return svgScene(
+        '<g transform="translate(80 60)">'
+      +   '<circle class="ripple" r="26" fill="none" stroke="'+bitColor(k,0)+'" stroke-width="4"/>'
+      +   '<circle class="ripple" r="26" fill="none" stroke="'+bitColor(k,1)+'" stroke-width="4" style="animation-delay:.5s"/>'
+      +   '<circle class="ripple" r="26" fill="none" stroke="'+bitColor(k,2)+'" stroke-width="4" style="animation-delay:1s"/>'
+      + '</g>'
+      + '<circle cx="80" cy="60" r="24" fill="#7FD8D2"/>'
+      + '<path d="M71 50h6l3 7-4 3a21 21 0 0 0 10 10l3-4 7 3v6a5 5 0 0 1-5.4 5C77 79 62.6 64.6 61.4 55.4A5 5 0 0 1 66.4 50z" fill="#FFFFFF"/>'
+      + bit(k,34,34,.8,bitColor(k,3),'rise',.15)
+      + bit(k,128,36,.8,bitColor(k,4),'rise',.65));
+    },
+    _default: function(k){
+      return svgScene(
+        '<g transform="translate(80 62) scale(3)"><path class="beat" d="'+BIT_PATH[k]+'" fill="'+bitColor(k,0)+'"/></g>'
+      + bit(k,34,50,.9,bitColor(k,1),'rise',.1)
+      + bit(k,126,52,.9,bitColor(k,2),'rise',.55));
+    }
+  };
+
+  /* ---------------- what the pop-up says ---------------- */
+  var MESSAGES = {
+    teeth:['Your teeth are sparkling clean!','Cavity monsters: defeated.','That smile could light up a room.','Squeaky clean, {name}!','Toothbrush: victorious.'],
+    piano:['The piano says thank you.','Beautiful playing, {name}!','Those keys never sounded better.','Practice makes progress.','The neighbors are impressed.'],
+    pigwater:['Fresh water — the guinea pig is thrilled.','Hydration station complete!','Your guinea pig gives you five stars.','Nice pouring, {name}!','Bottle filled, pig delighted.'],
+    pigfood:['Breakfast is served!','Munch munch — thank you, {name}.','One very happy guinea pig.','Food delivered right on time.','Five-star guinea pig café.'],
+    hair:['Tangle-free and shining!','Looking great, {name}.','Every knot defeated.','Hair: officially fabulous.','Smooth as can be.'],
+    homework:['Homework conquered!','Brain: powered up.','Nice thinking, {name}.','Done and dusted.','Your future self says thanks.'],
+    laundry:['Laundry sorted like a pro.','Socks reunited at last.','Piles: defeated.','Great sorting, {name}!','The laundry basket is grateful.'],
+    room:['Your room looks amazing!','Dust: evicted.','Sparkling floors, {name}.','Tidy room, happy brain.','That was a clean sweep.'],
+    household:['Thanks for helping the family!','The whole house says thank you.','Teamwork, {name}!','You made the house better today.','Helpful hero at work.'],
+    relative:['You made someone’s whole day.','That call meant a lot.','Family connected!','Someone is smiling because of you, {name}.','Best phone call of the week.']
+  };
+  var NAMES = {zev:'Zev', eve:'Eve'};
+  var cheerTimer = {zev:null, eve:null};
+
+  function praise(kid, id){
+    var list = MESSAGES[id] || ['Nice work, {name}!'];
+    return list[dayIndex() % list.length].replace('{name}', NAMES[kid]);
+  }
+
+  function cheer(kid, t){
+    var layer = document.getElementById('cheer-'+kid);
+    if(!layer) return;
+    var k = todayKind();
+    var build = SCENE[t.id] || SCENE._default;
+    clearTimeout(cheerTimer[kid]);
+    layer.innerHTML = '<div class="cheer-card">' + build(k)
+      + '<p class="cheer-msg">' + praise(kid, t.id) + '</p></div>';
+    layer.hidden = false;
+    var card = layer.firstChild;
+    requestAnimationFrame(function(){ card.classList.add('in'); });
+    cheerTimer[kid] = setTimeout(function(){
+      card.classList.remove('in');
+      card.classList.add('out');
+      cheerTimer[kid] = setTimeout(function(){
+        layer.hidden = true;
+        layer.innerHTML = '';
+      }, 340);
+    }, 2000);
+  }
+
+  /* ---------------- render ---------------- */
+  var defs = {zev:{}, eve:{}};
+
+  function buildLists(){
+    KIDS.forEach(function(kid){
+      document.getElementById('bucket-'+kid).innerHTML = jarSVG(kid);
+      var ul = document.getElementById('tasks-'+kid);
+      ul.innerHTML = '';
+      defs[kid] = {};
+      plan.tasks[kid].forEach(function(t){
+        defs[kid][t.id] = t;
+        var choice = t.type === 'choice';
+        var li = document.createElement('li');
+        li.className = 'task' + (choice ? ' choice' : '');
+        li.setAttribute('role','checkbox');
+        li.setAttribute('tabindex','0');
+        li.setAttribute('aria-checked','false');
+        li.dataset.id = t.id;
+        li.dataset.kid = kid;
+        li.innerHTML =
+          '<span class="box"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5 10 17.5 19 7"/></svg></span>'
+          + '<span class="tico"><svg viewBox="0 0 24 24" aria-hidden="true">'+ICON[t.icon]+'</svg></span>'
+          + '<span class="tbody"><span class="tlabel">'+t.label+'</span>'
+          + (choice
+              ? '<span class="tsub" data-role="sub">'+t.ask+'</span>'
+                + '<span class="choices">'
+                +   '<button type="button" class="pill" data-v="yesterday">'+t.yesLabel+'</button>'
+                +   '<button type="button" class="pill" data-v="pending">'+t.noLabel+'</button>'
+                + '</span>'
+              : '')
+          + '</span>';
+
+        if(choice){
+          Array.prototype.forEach.call(li.querySelectorAll('.pill'), function(pill){
+            pill.addEventListener('click', function(e){
+              e.stopPropagation();
+              answer(kid, t, li, pill.dataset.v);
+            });
+          });
+        }
+        li.addEventListener('click', function(){ toggle(kid, t, li); });
+        li.addEventListener('keydown', function(e){
+          if(e.key === ' ' || e.key === 'Enter'){ e.preventDefault(); toggle(kid, t, li); }
+        });
+        ul.appendChild(li);
+      });
+    });
+  }
+
+  function render(){
+    var allDone = true;
+    KIDS.forEach(function(kid){
+      var list = plan.tasks[kid];
+      var done = 0;
+      var ul = document.getElementById('tasks-'+kid);
+      Array.prototype.forEach.call(ul.children, function(li){
+        var t = defs[kid][li.dataset.id];
+        var val = state[kid][li.dataset.id];
+        var on;
+        if(t && t.type === 'choice'){
+          on = (val === 'yesterday' || val === 'morning');
+          var sub = li.querySelector('[data-role="sub"]');
+          sub.textContent = val === 'yesterday' ? t.doneYesterday
+            : val === 'morning' ? t.doneMorning
+            : val === 'pending' ? t.pending
+            : t.ask;
+          Array.prototype.forEach.call(li.querySelectorAll('.pill'), function(p){
+            p.classList.toggle('sel', p.dataset.v === val);
+          });
+          li.classList.toggle('pending', val === 'pending');
+        } else {
+          on = !!val;
+        }
+        li.setAttribute('aria-checked', on ? 'true' : 'false');
+        if(on) done++;
+      });
+      var frac = done / list.length;
+      var stars = Math.round(frac * TOTAL_STARS);
+      document.getElementById('tally-'+kid).textContent = done + ' of ' + list.length + ' done';
+      document.getElementById('stars-'+kid).textContent = stars + ' of ' + TOTAL_STARS + ' stars';
+      setStars(kid, stars, !booting);
+
+      var complete = done === list.length;
+      var panel = document.querySelector('.panel[data-kid="'+kid+'"]');
+      panel.classList.toggle('done', complete);
+      if(!complete || !wasDone[kid]) panel.classList.remove('peek');
+      document.getElementById('achievedstars-'+kid).textContent = TOTAL_STARS + ' of ' + TOTAL_STARS + ' stars';
+      document.getElementById('achievedprize-'+kid).textContent = plan.reward;
+      document.getElementById('achievedsub-'+kid).textContent = plan.note;
+      document.getElementById('chip-'+kid).classList.toggle('on', complete);
+
+      if(complete && !wasDone[kid] && !booting){ celebrate(kid); }
+      wasDone[kid] = complete;
+      if(!complete) allDone = false;
+    });
+    document.getElementById('rewardBar').classList.toggle('both', allDone);
+  }
+
+  function paintPlan(){
+    document.getElementById('todayLabel').textContent = plan.headline;
+    document.getElementById('rewardText').firstChild.nodeValue = plan.reward;
+    document.getElementById('rewardNote').textContent = plan.note;
+  }
+
+  function commit(kid, id, li, wasOn){
+    writeLocal();
+    pushRemote();
+    var nowOn = isOn(state[kid][id]);
+    render();
+    if(nowOn && !wasOn){
+      sparkle(li);
+      /* the last tick gets the Reward Achieved screen instead of a pop-up */
+      var panel = document.querySelector('.panel[data-kid="'+kid+'"]');
+      if(!panel.classList.contains('done')) cheer(kid, defs[kid][id]);
+    }
+  }
+
+  function isOn(v){ return v === true || v === 'yesterday' || v === 'morning'; }
+
+  /* plain tick, or the piano row's box: "not yet" becomes "practiced this morning" */
+  function toggle(kid, t, li){
+    var was = isOn(state[kid][t.id]);
+    if(t.type === 'choice'){
+      var v = state[kid][t.id];
+      if(v === 'yesterday' || v === 'morning') delete state[kid][t.id];
+      else if(v === 'pending') state[kid][t.id] = 'morning';
+      else return;                       /* answer the question first */
+    } else {
+      if(state[kid][t.id]) delete state[kid][t.id];
+      else state[kid][t.id] = true;
+    }
+    commit(kid, t.id, li, was);
+  }
+
+  function answer(kid, t, li, value){
+    var was = isOn(state[kid][t.id]);
+    if(state[kid][t.id] === value) delete state[kid][t.id];
+    else state[kid][t.id] = value;
+    commit(kid, t.id, li, was);
+  }
+
+  /* ---------------- day / storage wiring ---------------- */
+  function loadDay(){
+    booting = true;
+    plan = planFor(effectiveDate());
+    state = readLocal();
+    wasDone = {zev:false, eve:false};
+    buildLists();
+    paintPlan();
+    render();
+    booting = false;
+
+    if(unsub){ try{ unsub(); }catch(e){} unsub = null; }
+    if(db) subscribe();
+  }
+
+  function subscribe(){
+    var key = plan.key;
+    unsub = db.doc('progress/' + key).onSnapshot(function(snap){
+      if(key !== plan.key) return;
+      if(snap.exists){
+        var d = snap.data() || {};
+        state.zev = Object.assign({}, d.zev || {});
+        state.eve = Object.assign({}, d.eve || {});
+        writeLocal();
+        render();
+      } else if(anyChecked()){
+        pushRemote();
+      }
+    }, function(){});
+  }
+
+  /* ---------------- cross-device sync wiring ----------------
+     The Firebase module script (above) signs the device in anonymously and
+     then fires 'family-db-ready' with window.__familyDb set. Everything
+     else here (pushRemote/subscribe/loadDay) was already written to work
+     with any object shaped like {doc(path): {set, onSnapshot}}. */
+  function markSync(live, label){
+    var note = document.getElementById('syncNote');
+    var text = document.getElementById('syncText');
+    if(!note) return;
+    note.classList.toggle('live', !!live);
+    text.textContent = label || (live ? 'Synced across devices' : 'Saved on this device only');
+  }
+  window.addEventListener('family-db-ready', function(){
+    db = window.__familyDb;
+    markSync(true);
+    if(plan) subscribe();
+  });
+  window.addEventListener('family-db-error', function(){
+    markSync(false, 'Could not connect — saved on this device only');
+  });
+  if(window.__familyDb){
+    db = window.__familyDb;
+    markSync(true);
+  }
+
+  /* ---------------- celebration ---------------- */
+  var canvas = document.getElementById('fx');
+  var ctx = canvas.getContext('2d');
+  var parts = [];
+  var raf = null;
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function sizeCanvas(){
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.floor(innerWidth * dpr);
+    canvas.height = Math.floor(innerHeight * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  sizeCanvas();
+  window.addEventListener('resize', sizeCanvas);
+
+  var BIT2D = {};
+  function bitPath2D(kind){
+    if(!BIT2D[kind]) BIT2D[kind] = new Path2D(BIT_PATH[kind]);
+    return BIT2D[kind];
+  }
+  function drawBit(kind, x, y, r, rot, color, alpha){
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.rotate(rot);
+    ctx.scale(r/10, r/10);
+    ctx.globalAlpha = alpha;
+    ctx.fillStyle = color;
+    ctx.fill(bitPath2D(kind));
+    ctx.restore();
+  }
+
+  function tick(){
+    ctx.clearRect(0,0,innerWidth,innerHeight);
+    var alive = 0;
+    for(var i=0;i<parts.length;i++){
+      var p = parts[i];
+      if(p.life <= 0) continue;
+      alive++;
+      p.life -= 1;
+      p.vy += p.g;
+      p.vx *= 0.992;
+      p.x += p.vx;
+      p.y += p.vy;
+      p.rot += p.spin;
+      var a = Math.min(1, p.life / 34);
+      drawBit(p.kind, p.x, p.y, p.r, p.rot, p.color, a);
+    }
+    if(alive > 0){ raf = requestAnimationFrame(tick); }
+    else { ctx.clearRect(0,0,innerWidth,innerHeight); parts = []; raf = null; }
+  }
+  function run(){ if(!raf) raf = requestAnimationFrame(tick); }
+
+  function burst(x, y, n, power){
+    var kind = todayKind();
+    for(var i=0;i<n;i++){
+      var ang = -Math.PI/2 + (Math.random()-0.5) * Math.PI * 1.55;
+      var sp = (0.35 + Math.random()) * power;
+      parts.push({
+        x:x, y:y, kind:kind,
+        vx:Math.cos(ang)*sp*(0.9+Math.random()*0.8),
+        vy:Math.sin(ang)*sp,
+        g:0.16 + Math.random()*0.1,
+        r:5 + Math.random()*11,
+        rot:Math.random()*Math.PI*2,
+        spin:(Math.random()-0.5)*0.28,
+        color:bitColor(kind, (Math.random()*5)|0),
+        life:80 + Math.random()*70
+      });
+    }
+    run();
+  }
+
+  function centerOf(el){
+    var r = el.getBoundingClientRect();
+    return {x:r.left + r.width/2, y:r.top + r.height/2};
+  }
+
+  function sparkle(li){
+    if(reduce) return;
+    var box = li.querySelector('.box');
+    var c = centerOf(box);
+    var kind = todayKind();
+    for(var i=0;i<7;i++){
+      parts.push({
+        x:c.x, y:c.y, kind:kind,
+        vx:(Math.random()-0.5)*5.2,
+        vy:-1.6 - Math.random()*3.4,
+        g:0.2, r:3.5 + Math.random()*4.5,
+        rot:Math.random()*6.3, spin:(Math.random()-0.5)*0.35,
+        color:bitColor(kind, (Math.random()*5)|0),
+        life:42 + Math.random()*22
+      });
+    }
+    run();
+  }
+
+  function celebrate(kid){
+    if(reduce) return;
+    var wrap = document.getElementById('bucket-'+kid);
+    var c = centerOf(wrap);
+    burst(c.x, c.y, 46, 9);
+    setTimeout(function(){ burst(c.x, c.y, 34, 12); }, 220);
+    var panel = document.querySelector('.panel[data-kid="'+kid+'"]');
+    var pc = centerOf(panel);
+    setTimeout(function(){ burst(pc.x, pc.y + 60, 40, 11); }, 440);
+  }
+
+  /* ---------------- grown-up controls ---------------- */
+  var sheet = document.getElementById('sheet');
+  document.getElementById('gearBtn').addEventListener('click', function(e){
+    e.stopPropagation();
+    sheet.hidden = !sheet.hidden;
+  });
+  document.addEventListener('click', function(e){
+    if(!sheet.hidden && !sheet.contains(e.target)) sheet.hidden = true;
+  });
+  document.getElementById('daySel').addEventListener('change', function(){
+    override = this.value === 'auto' ? null : Number(this.value);
+    loadDay();
+  });
+  document.getElementById('resetBtn').addEventListener('click', function(){
+    state = {zev:{}, eve:{}};
+    wasDone = {zev:false, eve:false};
+    writeLocal();
+    pushRemote();
+    render();
+    sheet.hidden = true;
+  });
+
+  KIDS.forEach(function(kid){
+    document.getElementById('achieved-'+kid).addEventListener('click', function(){
+      document.querySelector('.panel[data-kid="'+kid+'"]').classList.add('peek');
+    });
+  });
+
+  /* roll over to the next day if the iPad sits on this page overnight */
+  setInterval(function(){
+    if(override !== null) return;
+    var fresh = planFor(new Date());
+    if(fresh.key !== plan.key || fresh.dow !== plan.dow) loadDay();
+  }, 60000);
+
+  loadDay();
+})();
+</script>
+
+</body></html>
