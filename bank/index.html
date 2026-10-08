@@ -1,0 +1,1154 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Mama Bank</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Grandstander:wght@600;800&family=Nunito:wght@600;700;800&display=swap">
+<style>
+:root{
+  --ground-top:#E9EFFC;--ground-bot:#FFF4DE;--paper:#FFFFFF;--paper-tint:#F5F8FF;
+  --ink:#1E2350;--ink-soft:#5C6396;--ink-muted:#8B92C0;--line:#CFD9F2;--grid:#E6EBF8;
+  --sun:#FFC13B;--sun-deep:#EE9B14;--zev:#0F9E98;--zev-tint:#DFF5F3;--eve:#DE4E88;--eve-tint:#FCE2EC;
+  --kept:#2a78d6;--kept-soft:rgba(42,120,214,.12);--taken:#eb6834;--good:#0ca30c;
+  --shadow:0 10px 30px rgba(30,35,80,.10);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground-top:#0D1233;--ground-bot:#241E38;--paper:#191F45;--paper-tint:#141A3B;
+    --ink:#EEF2FF;--ink-soft:#A6AFDF;--ink-muted:#7E86B8;--line:#333C74;--grid:#2A3260;
+    --sun:#FFCE5C;--sun-deep:#FFB021;--zev:#43D8CD;--zev-tint:#0E3B39;--eve:#FF86B4;--eve-tint:#432031;
+    --kept:#3987e5;--kept-soft:rgba(57,135,229,.18);--taken:#d95926;--good:#3ecb3e;
+    --shadow:0 10px 30px rgba(0,0,0,.32);
+  }
+}
+:root[data-theme="dark"]{
+  --ground-top:#0D1233;--ground-bot:#241E38;--paper:#191F45;--paper-tint:#141A3B;
+  --ink:#EEF2FF;--ink-soft:#A6AFDF;--ink-muted:#7E86B8;--line:#333C74;--grid:#2A3260;
+  --sun:#FFCE5C;--sun-deep:#FFB021;--zev:#43D8CD;--zev-tint:#0E3B39;--eve:#FF86B4;--eve-tint:#432031;
+  --kept:#3987e5;--kept-soft:rgba(57,135,229,.18);--taken:#d95926;--good:#3ecb3e;
+  --shadow:0 10px 30px rgba(0,0,0,.32);
+}
+
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{
+  margin:0;font-family:"Nunito",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  color:var(--ink);background:linear-gradient(168deg,var(--ground-top) 0%,var(--ground-bot) 100%);
+  background-attachment:fixed;min-height:100vh;-webkit-text-size-adjust:100%;
+}
+body[data-mode="kid"] .parentonly{display:none!important}
+body[data-mode="parent"] .kidonly{display:none!important}
+.wrap{max-width:1080px;margin:0 auto;padding:clamp(14px,2.4vw,30px) clamp(12px,2.4vw,28px) 56px;display:flex;flex-direction:column;gap:clamp(12px,1.8vw,20px)}
+
+.top{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.mark{width:44px;height:44px;flex:none}
+h1{font-family:"Grandstander","Nunito",sans-serif;font-weight:800;font-size:clamp(1.6rem,3.4vw,2.4rem);margin:0;line-height:1}
+.sub{margin:.25em 0 0;font-weight:700;color:var(--ink-soft);font-size:clamp(.82rem,1.3vw,.95rem)}
+.spacer{flex:1}
+.chip{display:inline-flex;align-items:center;gap:7px;padding:7px 13px;border-radius:999px;border:1.5px solid var(--line);background:var(--paper);font-weight:800;font-size:.76rem;color:var(--ink-soft)}
+.chip .dot{width:8px;height:8px;border-radius:50%;background:var(--ink-muted);flex:none}
+.chip.live .dot{background:var(--good)}
+.gear{width:40px;height:40px;border-radius:50%;border:1.5px solid var(--line);background:var(--paper);color:var(--ink-soft);display:grid;place-items:center;cursor:pointer;flex:none}
+.gear:hover{color:var(--ink)}
+
+.card{background:var(--paper);border:1.5px solid var(--line);border-radius:20px;box-shadow:var(--shadow);padding:clamp(14px,2vw,22px)}
+.eyebrow{font-weight:800;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-muted);margin:0 0 10px}
+.notice{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:color-mix(in srgb,var(--sun) 20%,var(--paper));
+  border:1.5px solid color-mix(in srgb,var(--sun-deep) 40%,transparent);border-radius:14px;padding:10px 16px;font-weight:700;font-size:.9rem}
+
+.kids{display:grid;grid-template-columns:1fr 1fr;gap:clamp(12px,1.8vw,20px)}
+.kid{position:relative;overflow:hidden}
+.kid[data-kid="zev"]{--kid:var(--zev);--kid-tint:var(--zev-tint)}
+.kid[data-kid="eve"]{--kid:var(--eve);--kid-tint:var(--eve-tint)}
+.kid::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--kid)}
+.kidname{font-family:"Grandstander","Nunito",sans-serif;font-weight:800;font-size:clamp(1.3rem,2.4vw,1.8rem);color:var(--kid);margin:0 0 12px;letter-spacing:.03em}
+.pots{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.pot{background:var(--paper-tint);border-radius:14px;padding:12px 14px}
+.pot .lab{font-weight:800;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-muted);display:block;margin-bottom:4px}
+.amt{width:100%;border:none;background:transparent;padding:2px 0;font-family:"Nunito",sans-serif;font-weight:800;color:var(--ink);font-size:clamp(1.25rem,2.5vw,1.85rem);line-height:1.1}
+.amt:focus{outline:2px solid var(--kid);outline-offset:3px;border-radius:6px}
+.kidacts{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+
+/* kid mode: two pots, side by side */
+.twopots{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:clamp(8px,1.6vw,18px);align-items:stretch}
+.half{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;min-width:0}
+.potseam{width:2px;align-self:stretch;background-image:linear-gradient(var(--line) 58%,transparent 0);background-size:2px 14px;border-radius:2px;opacity:.85}
+.potart{width:clamp(88px,12vw,138px);height:auto;display:block;filter:drop-shadow(0 8px 14px rgba(30,35,80,.16))}
+.potlab{font-weight:800;font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-muted)}
+.said{margin:0;font-weight:700;font-size:clamp(.8rem,1.35vw,.95rem);color:var(--ink-soft);line-height:1.35}
+.said b{display:block;font-family:"Grandstander","Nunito",sans-serif;font-weight:800;color:var(--kid);
+  font-size:clamp(1.05rem,2.1vw,1.5rem);line-height:1.12;margin-top:.2em;text-wrap:balance}
+.half .btn{margin-top:auto}
+.tiernote{margin:.4em 0 0;font-weight:700;font-size:.76rem;color:var(--sun-deep);line-height:1.35;max-width:26ch}
+
+.form{margin-top:12px;background:var(--paper-tint);border:1.5px solid var(--line);border-radius:14px;padding:12px 14px;display:grid;gap:10px}
+.form .fr{display:grid;grid-template-columns:110px 1fr;gap:10px}
+.form input,.form select{width:100%;font-family:inherit;font-weight:700;font-size:.95rem;color:var(--ink);background:var(--paper);border:1.5px solid var(--line);border-radius:10px;padding:9px 11px}
+.form .fa{display:flex;gap:8px;justify-content:flex-end;align-items:center;flex-wrap:wrap}
+.form .ferr{margin-right:auto;font-weight:800;font-size:.8rem;color:var(--taken);text-align:left}
+/* big, forgiving tap targets — these get tapped right after the keypad closes */
+.form .btn{min-height:46px;padding:12px 20px;touch-action:manipulation}
+.form .btn.solid{flex:1 1 150px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(12px);z-index:70;
+  background:var(--ink);color:var(--paper);font-weight:800;font-size:.9rem;padding:11px 20px;border-radius:999px;
+  box-shadow:0 12px 30px rgba(20,25,60,.32);opacity:0;transition:opacity .2s ease,transform .2s ease;pointer-events:none}
+.toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+
+.rows{display:flex;flex-direction:column;gap:12px}
+.row{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:14px;background:var(--paper-tint);border-radius:16px;padding:12px 16px}
+.row[data-kid="zev"]{--kid:var(--zev)}
+.row[data-kid="eve"]{--kid:var(--eve)}
+.who{font-family:"Grandstander","Nunito",sans-serif;font-weight:800;font-size:1.05rem;color:var(--kid);min-width:3.2em}
+.due{font-weight:700;color:var(--ink-soft);font-size:.92rem;line-height:1.4}
+.due b{color:var(--ink);font-size:1.15rem;font-variant-numeric:tabular-nums}
+.due .per{display:block;font-weight:800;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--sun-deep);margin-bottom:3px}
+.due .queue{display:block;font-size:.78rem;color:var(--ink-muted);margin-top:3px}
+.due .clear{color:var(--good)}
+.acts{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.btn{font-family:inherit;font-weight:800;font-size:.86rem;padding:9px 15px;border-radius:999px;cursor:pointer;
+  border:2px solid var(--line);background:var(--paper);color:var(--ink-soft);transition:all .15s ease;white-space:nowrap}
+.btn:hover{border-color:var(--kid,var(--ink-soft));color:var(--kid,var(--ink))}
+.btn.keep{border-color:var(--kept);color:var(--kept)}
+.btn.keep:hover{background:var(--kept);color:#fff}
+.btn.take{border-color:var(--taken);color:var(--taken)}
+.btn.take:hover{background:var(--taken);color:#fff}
+.btn.solid{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.btn.ghost{font-size:.78rem;padding:7px 12px}
+
+.filters{display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+.seg{display:inline-flex;background:var(--paper);border:1.5px solid var(--line);border-radius:999px;padding:3px;gap:2px;box-shadow:var(--shadow)}
+.seg button{font-family:inherit;font-weight:800;font-size:.84rem;color:var(--ink-soft);background:transparent;border:none;padding:8px 16px;border-radius:999px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.seg[data-role="kid"] button[aria-pressed="true"][data-v="zev"]{background:var(--zev);color:#fff}
+.seg[data-role="kid"] button[aria-pressed="true"][data-v="eve"]{background:var(--eve);color:#fff}
+.seglab{font-weight:800;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-muted)}
+
+.chartcard h2{font-family:"Grandstander","Nunito",sans-serif;font-weight:800;font-size:clamp(1.05rem,2vw,1.4rem);margin:0}
+.chartcard .cap{margin:.4em 0 0;font-weight:700;font-size:.85rem;color:var(--ink-soft);max-width:62ch;line-height:1.45}
+.legend{display:flex;gap:18px;flex-wrap:wrap;margin:14px 0 4px}
+.lg{display:flex;align-items:center;gap:8px;font-weight:800;font-size:.85rem;color:var(--ink-soft)}
+.lg i{width:16px;height:4px;border-radius:2px;display:block}
+.plotwrap{position:relative;margin-top:6px}
+svg.plot{display:block;width:100%;height:auto;overflow:visible;touch-action:pan-y}
+.tip{position:absolute;pointer-events:none;z-index:4;opacity:0;transition:opacity .12s ease;background:var(--paper);
+  border:1.5px solid var(--line);border-radius:12px;padding:9px 12px;box-shadow:0 10px 26px rgba(20,25,60,.2);
+  font-size:.82rem;font-weight:700;color:var(--ink);white-space:nowrap;font-variant-numeric:tabular-nums}
+.tip .when{display:block;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:5px}
+.tip .l{display:flex;align-items:center;gap:7px;line-height:1.7}
+.tip .l i{width:10px;height:10px;border-radius:3px;display:block;flex:none}
+
+.take{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin-top:18px}
+.tk{background:var(--paper-tint);border-radius:14px;padding:14px 16px}
+.tk .lab{font-weight:800;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-muted);display:block;margin-bottom:6px}
+.tk .val{font-weight:800;font-size:clamp(1.15rem,2.2vw,1.55rem);line-height:1.1}
+.tk .val.kept{color:var(--kept)}
+.tk p{margin:6px 0 0;font-size:.8rem;font-weight:700;color:var(--ink-soft);line-height:1.4}
+
+table{width:100%;border-collapse:collapse;margin-top:14px;font-size:.85rem}
+th,td{text-align:right;padding:7px 10px;border-bottom:1px solid var(--grid);font-variant-numeric:tabular-nums;font-weight:700}
+th:first-child,td:first-child{text-align:left}
+th{font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-muted);font-weight:800}
+.tablewrap{overflow-x:auto}
+
+.ledhead{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:14px}
+.led{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.led li{display:grid;grid-template-columns:64px minmax(0,1fr) auto auto auto;align-items:center;gap:12px;padding:11px 4px;border-bottom:1px solid var(--grid)}
+.led li:last-child{border-bottom:none}
+.when2{font-weight:800;font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-muted);font-variant-numeric:tabular-nums}
+.what{min-width:0}
+.what .t{display:block;font-weight:800;font-size:.95rem;line-height:1.25;overflow-wrap:anywhere}
+.what .m{display:block;font-weight:700;font-size:.76rem;color:var(--ink-muted);margin-top:2px}
+.who2{font-weight:800;font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:999px}
+.who2[data-kid="zev"]{color:var(--zev);background:var(--zev-tint)}
+.who2[data-kid="eve"]{color:var(--eve);background:var(--eve-tint)}
+.delta{font-weight:800;font-size:1rem;font-variant-numeric:tabular-nums;white-space:nowrap}
+.delta.up{color:var(--good)}
+.delta.down{color:var(--taken)}
+.del{border:none;background:transparent;color:var(--ink-muted);cursor:pointer;font-size:1.1rem;line-height:1;padding:4px 6px;border-radius:8px}
+.del:hover{color:var(--taken);background:var(--paper-tint)}
+.empty{font-weight:700;color:var(--ink-muted);font-size:.9rem;padding:14px 4px}
+.spentsum{margin-top:14px;background:var(--paper-tint);border-radius:14px;padding:12px 16px;font-weight:700;font-size:.86rem;color:var(--ink-soft)}
+.spentsum b{color:var(--ink)}
+.foot{font-size:.8rem;font-weight:700;color:var(--ink-muted);text-align:center;line-height:1.6}
+
+.sheet{position:fixed;top:70px;right:calc(50% - 540px + 16px);z-index:40;width:min(320px,calc(100vw - 32px));
+  background:var(--paper);border:1.5px solid var(--line);border-radius:18px;box-shadow:0 20px 50px rgba(20,25,60,.28);padding:16px}
+@media (max-width:1120px){.sheet{right:16px}}
+.sheet h3{margin:0 0 12px;font-family:"Grandstander","Nunito",sans-serif;font-size:1rem;font-weight:800}
+.sheet label{display:block;font-size:.7rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-muted);margin:12px 0 6px}
+.sheet label:first-of-type{margin-top:0}
+.sheet input{width:100%;font-family:inherit;font-weight:800;font-size:1rem;color:var(--ink);background:var(--paper-tint);border:1.5px solid var(--line);border-radius:12px;padding:10px 12px}
+.sheet .btn{width:100%;margin-top:12px;text-align:center}
+.sheet p{margin:12px 0 0;font-size:.76rem;font-weight:700;color:var(--ink-muted);line-height:1.5}
+
+@media (max-width:760px){
+  .kids{grid-template-columns:1fr}
+  .row{grid-template-columns:1fr;gap:10px}
+  .acts{justify-content:flex-start}
+  .led li{grid-template-columns:minmax(0,1fr) auto auto;row-gap:4px}
+  .when2{grid-column:1/-1}
+  .kidview{grid-template-columns:1fr;justify-items:center;text-align:center}
+}
+@media (prefers-reduced-motion:reduce){*{transition-duration:.01s!important}}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <svg class="mark" viewBox="0 0 48 48" aria-hidden="true">
+      <ellipse cx="24" cy="38" rx="15" ry="5" fill="#EE9B14"/>
+      <path d="M9 20c0 12 4 18 15 18s15-6 15-18z" fill="#FFC13B"/>
+      <ellipse cx="24" cy="20" rx="15" ry="5.5" fill="#FFDE7A" stroke="#EE9B14" stroke-width="2.5"/>
+      <path d="M24 6v9M24 15c-4 0-6 2-6 4" fill="none" stroke="#EE9B14" stroke-width="2.5" stroke-linecap="round"/>
+      <circle cx="24" cy="6" r="3.4" fill="#FFC13B" stroke="#EE9B14" stroke-width="2"/>
+    </svg>
+    <div>
+      <h1>Mama Bank</h1>
+      <p class="sub" id="dateline"></p>
+    </div>
+    <div class="spacer"></div>
+    <span class="chip parentonly" id="syncChip"><span class="dot"></span><span id="syncText">Checking…</span></span>
+    <button class="btn ghost" id="modeBtn"></button>
+    <button class="gear parentonly" id="gearBtn" aria-label="Settings">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="3.2"/>
+        <path d="M19.4 15a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.87-.34 1.7 1.7 0 0 0-1.03 1.56V21a2 2 0 1 1-4 0v-.11A1.7 1.7 0 0 0 9 19.4a1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-1.56-1.03H3a2 2 0 1 1 0-4h.11A1.7 1.7 0 0 0 4.6 9a1.7 1.7 0 0 0-.34-1.87l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.7 1.7 0 0 0 9 4.6h.08A1.7 1.7 0 0 0 10.1 3.04V3a2 2 0 1 1 4 0v.11a1.7 1.7 0 0 0 1.03 1.56 1.7 1.7 0 0 0 1.87-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.7 1.7 0 0 0 19.4 9v.08a1.7 1.7 0 0 0 1.56 1.03H21a2 2 0 1 1 0 4h-.11a1.7 1.7 0 0 0-1.49 1.03z"/>
+      </svg>
+    </button>
+  </header>
+
+  <div class="notice parentonly" id="notice">
+    <span>These are example figures. Type the real balances over them to start — everything after that is saved for you.</span>
+  </div>
+
+  <section class="kids" id="kidCards"></section>
+
+  <section class="card">
+    <p class="eyebrow" id="interestEyebrow">Interest to decide</p>
+    <div class="rows" id="interestRows"></div>
+  </section>
+
+  <div class="filters">
+    <span class="seglab">Show</span>
+    <span class="seg" data-role="kid" id="segKid">
+      <button data-v="zev" aria-pressed="true">Zev</button>
+      <button data-v="eve" aria-pressed="false">Eve</button>
+    </span>
+    <span class="seglab">Looking ahead</span>
+    <span class="seg" data-role="span" id="segSpan">
+      <button data-v="12" aria-pressed="false">1 year</button>
+      <button data-v="24" aria-pressed="true">2 years</button>
+      <button data-v="36" aria-pressed="false">3 years</button>
+    </span>
+    <span class="seglab parentonly">Chart</span>
+    <span class="seg parentonly" data-role="metric" id="segMetric">
+      <button data-v="interest" aria-pressed="true">Monthly interest</button>
+      <button data-v="total" aria-pressed="false">Total money</button>
+    </span>
+  </div>
+
+  <section class="card chartcard">
+    <h2 id="chartTitle"></h2>
+    <p class="cap" id="chartCap"></p>
+    <div class="legend">
+      <span class="lg"><i style="background:var(--kept)"></i>Interest kept in savings every month</span>
+      <span class="lg"><i style="background:var(--taken)"></i>Interest moved to spending every month</span>
+    </div>
+    <div class="plotwrap" id="plotwrap">
+      <svg class="plot" id="plot" viewBox="0 0 820 348" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Growth comparison"></svg>
+      <div class="tip" id="tip"></div>
+    </div>
+    <div class="take" id="takeaways"></div>
+    <button class="btn ghost" id="tableBtn" style="margin-top:16px">Show the numbers</button>
+    <div class="tablewrap" id="tablewrap" hidden></div>
+  </section>
+
+  <section class="card">
+    <div class="ledhead">
+      <p class="eyebrow" style="margin:0">History</p>
+      <span class="spacer"></span>
+      <span class="seg" data-role="who" id="segWho">
+        <button data-v="all" aria-pressed="true">Both</button>
+        <button data-v="zev" aria-pressed="false">Zev</button>
+        <button data-v="eve" aria-pressed="false">Eve</button>
+      </span>
+      <button class="btn ghost parentonly" id="csvBtn" hidden>Save a backup</button>
+    </div>
+    <ul class="led" id="ledger"></ul>
+    <div class="spentsum" id="spentsum"></div>
+  </section>
+
+  <p class="foot parentonly" id="footNote"></p>
+</div>
+
+<div class="sheet" id="sheet" hidden>
+  <h3>Settings</h3>
+  <label for="rateInput">Monthly interest rate (%)</label>
+  <input id="rateInput" inputmode="decimal">
+  <label for="capInput">Full rate applies up to ($ a month)</label>
+  <input id="capInput" inputmode="decimal">
+  <label for="rate2Input">Rate above that (%)</label>
+  <input id="rate2Input" inputmode="decimal">
+  <label for="startInput">First month interest was due</label>
+  <input id="startInput" type="month">
+  <label for="pinInput">Parent-mode PIN (blank for none)</label>
+  <input id="pinInput" inputmode="numeric" placeholder="e.g. 1234">
+  <button class="btn ghost" id="resetBtn">Start over with example figures</button>
+  <p id="tierNote"></p>
+  <p>Interest becomes available to decide on the 1st of each month and waits there until it is allocated. The PIN only slows a curious kid down — it is not real security.</p>
+</div>
+
+<!-- ============ Firebase: shared cross-device storage ============
+     Same family-hub Firebase project the morning routine tracker uses, in
+     its own 'bank/' collection. Every device signs in anonymously just to
+     satisfy the security rules — the whole family reads and writes the
+     same documents. The shim exposes a tiny `.doc(path).set()` /
+     `.onSnapshot()` surface so the rest of this page (unchanged from the
+     original artifact) doesn't need to know it's talking to Firebase. -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+  import {
+    getFirestore, doc, setDoc, onSnapshot
+  } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+  import {
+    getAuth, signInAnonymously, onAuthStateChanged
+  } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+
+  var firebaseConfig = {
+    apiKey: "AIzaSyC-3RaR0DtRUHXOs2ZziYw3rcoY0oUMFNA",
+    authDomain: "familyhub-7ce5b.firebaseapp.com",
+    projectId: "familyhub-7ce5b",
+    storageBucket: "familyhub-7ce5b.firebasestorage.app",
+    messagingSenderId: "430624150535",
+    appId: "1:430624150535:web:ee6e142bb4f33d3c9b06a2"
+  };
+
+  var app = initializeApp(firebaseConfig);
+  var firestore = getFirestore(app);
+  var auth = getAuth(app);
+
+  function makeDbShim(){
+    return {
+      doc: function(path){
+        var ref = doc(firestore, path);
+        return {
+          set: function(data){ return setDoc(ref, data); },
+          onSnapshot: function(onNext, onError){
+            return onSnapshot(ref, function(snap){
+              onNext({ exists: snap.exists(), data: function(){ return snap.data(); } });
+            }, onError);
+          }
+        };
+      }
+    };
+  }
+
+  onAuthStateChanged(auth, function(user){
+    if(user){
+      window.__familyDb = makeDbShim();
+      window.dispatchEvent(new Event('family-db-ready'));
+    }
+  });
+  signInAnonymously(auth).catch(function(){
+    window.dispatchEvent(new Event('family-db-error'));
+  });
+</script>
+
+<script>
+(function(){
+  "use strict";
+
+  var MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var LONG = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  var KIDS = ['zev','eve'];
+  var NAMES = {zev:'Zev', eve:'Eve'};
+  var LS = 'mama-bank:v3';
+  var EXAMPLE = {zev:{savings:120, spending:15.5}, eve:{savings:95, spending:22}};
+
+  var state = {
+    rate:0.05, rate2:0.01, cap:30, real:false, startMonth:null, pin:'',
+    kids:{zev:{opening:{savings:120, spending:15.5}, entries:[]},
+          eve:{opening:{savings:95, spending:22}, entries:[]}},
+    kid:'zev', months:24, who:'all', metric:'interest', mode:'parent', openForm:null
+  };
+
+  var db = null, writing = {};
+
+  /* ---------------- helpers ---------------- */
+  var money = new Intl.NumberFormat('en-US',{style:'currency',currency:'USD'});
+  var money0 = new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0});
+  function fmt(n){ return money.format(n); }
+  function r2(n){ return Math.round(n*100)/100; }
+  function parseAmt(s){ var n = parseFloat(String(s).replace(/[^0-9.\-]/g,'')); return isFinite(n) ? r2(n) : null; }
+  function pad2(n){ return String(n).padStart(2,'0'); }
+  function todayISO(){ var d = new Date(); return d.getFullYear()+'-'+pad2(d.getMonth()+1)+'-'+pad2(d.getDate()); }
+  function nowMonth(){ var d = new Date(); return d.getFullYear()+'-'+pad2(d.getMonth()+1); }
+  function shortDate(iso){ var p = String(iso).split('-'); return p.length<3 ? iso : MONTHS[Number(p[1])-1]+' '+Number(p[2]); }
+  function monthName(key){ var p = String(key).split('-'); return LONG[Number(p[1])-1]+' '+p[0]; }
+  function monthShort(key){ var p = String(key).split('-'); return MONTHS[Number(p[1])-1]; }
+  function addMonth(key, k){
+    var p = String(key).split('-'), y = Number(p[0]), m = Number(p[1]) - 1 + k;
+    y += Math.floor(m/12); m = ((m%12)+12)%12;
+    return y+'-'+pad2(m+1);
+  }
+  function monthLabel(offset){ var d = new Date(); d.setDate(1); d.setMonth(d.getMonth()+offset); return MONTHS[d.getMonth()]+" '"+String(d.getFullYear()).slice(2); }
+  function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
+
+  var toastEl = null, toastTimer = null;
+  function toast(msg){
+    if(!toastEl){
+      toastEl = document.createElement('div');
+      toastEl.className = 'toast';
+      document.body.appendChild(toastEl);
+    }
+    toastEl.textContent = msg;
+    requestAnimationFrame(function(){ toastEl.classList.add('on'); });
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ toastEl.classList.remove('on'); }, 2600);
+  }
+  function escapeHTML(s){ return String(s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+
+  /* ---------------- ledger maths ---------------- */
+  function effect(e){
+    if(e.type === 'purchase') return {savings:0, spending:-e.amount};
+    var d = {savings:0, spending:0};
+    d[e.account === 'savings' ? 'savings' : 'spending'] = e.amount;
+    return d;
+  }
+  function balancesAt(kid, cutoffISO){
+    var k = state.kids[kid], s = k.opening.savings, p = k.opening.spending;
+    k.entries.forEach(function(e){
+      if(cutoffISO && !(e.date < cutoffISO)) return;
+      var d = effect(e); s += d.savings; p += d.spending;
+    });
+    return {savings:r2(s), spending:r2(p)};
+  }
+  function balances(kid){ return balancesAt(kid, null); }
+
+  /* The rate is tiered, like a tax bracket: the first slice of savings earns the
+     full rate up to a monthly cap, and anything above that earns the lower rate.
+     Done this way the payment never falls when the balance grows — it just grows
+     more slowly past the cap. */
+  function tierAt(){ return state.cap / state.rate; }
+  function interestOn(savings){
+    var T = tierAt();
+    return r2(savings <= T ? savings * state.rate : state.cap + (savings - T) * state.rate2);
+  }
+  function inTier2(savings){ return savings > tierAt(); }
+
+  function startMonth(){ return state.startMonth || nowMonth(); }
+  /* every month from the first due month up to now that has not been allocated */
+  function pendingMonths(kid){
+    var out = [], cur = addMonth(startMonth(), 1), stop = nowMonth(), guard = 0;
+    var done = {};
+    state.kids[kid].entries.forEach(function(e){ if(e.type === 'interest' && e.period) done[e.period] = 1; });
+    while(cur <= stop && guard++ < 120){
+      if(!done[cur]) out.push(cur);
+      cur = addMonth(cur, 1);
+    }
+    return out;
+  }
+  function interestFor(kid, period){
+    return interestOn(balancesAt(kid, period + '-01').savings);
+  }
+  function currentInterest(kid){ return interestOn(balances(kid).savings); }
+
+  function addEntry(kid, entry){
+    entry.id = uid();
+    entry.date = entry.date || todayISO();
+    state.kids[kid].entries.push(entry);
+    state.real = true;
+    if(!state.startMonth){ state.startMonth = nowMonth(); persistSettings(); }
+    persist(kid); renderAll();
+  }
+  function removeEntry(kid, id){
+    state.kids[kid].entries = state.kids[kid].entries.filter(function(e){ return e.id !== id; });
+    persist(kid); renderAll();
+  }
+  function allEntries(){
+    var out = [];
+    KIDS.forEach(function(k){ state.kids[k].entries.forEach(function(e){ out.push({kid:k, e:e}); }); });
+    out.sort(function(a,b){
+      if(a.e.date === b.e.date) return a.e.id < b.e.id ? 1 : -1;
+      return a.e.date < b.e.date ? 1 : -1;
+    });
+    return out;
+  }
+
+  /* ---------------- storage ---------------- */
+  function saveLocal(){
+    try{
+      localStorage.setItem(LS, JSON.stringify({
+        rate:state.rate, rate2:state.rate2, cap:state.cap,
+        real:state.real, startMonth:state.startMonth, pin:state.pin, kids:state.kids,
+        kid:state.kid, months:state.months, who:state.who, metric:state.metric, mode:state.mode
+      }));
+    }catch(e){}
+  }
+  function loadLocal(){
+    try{
+      var p = JSON.parse(localStorage.getItem(LS) || 'null');
+      if(!p) return;
+      if(typeof p.rate === 'number') state.rate = p.rate;
+      if(typeof p.rate2 === 'number') state.rate2 = p.rate2;
+      if(typeof p.cap === 'number') state.cap = p.cap;
+      state.real = !!p.real;
+      if(p.startMonth) state.startMonth = p.startMonth;
+      if(typeof p.pin === 'string') state.pin = p.pin;
+      if(p.kids) KIDS.forEach(function(k){
+        if(p.kids[k]){
+          state.kids[k].opening = p.kids[k].opening || state.kids[k].opening;
+          state.kids[k].entries = p.kids[k].entries || [];
+        }
+      });
+      if(p.kid) state.kid = p.kid;
+      if(p.months) state.months = p.months;
+      if(p.who) state.who = p.who;
+      if(p.metric) state.metric = p.metric;
+      if(p.mode) state.mode = p.mode;
+    }catch(e){}
+  }
+  var quiet = {};
+  function persist(kid){
+    saveLocal();
+    if(!db) return;
+    writing[kid] = (writing[kid] || 0) + 1;
+    function done(){
+      writing[kid] = Math.max(0, (writing[kid] || 1) - 1);
+      quiet[kid] = Date.now() + 2000;   /* ignore snapshots that were already in flight */
+    }
+    try{
+      db.doc('bank/'+kid).set({opening:state.kids[kid].opening, entries:state.kids[kid].entries, v:3})
+        .then(done, function(){ done(); toast('Could not save to your account — kept on this device'); });
+    }catch(e){ done(); }
+  }
+  function persistSettings(){
+    saveLocal();
+    if(!db) return;
+    writing.settings = true;
+    try{
+      db.doc('bank/settings').set({rate:state.rate, rate2:state.rate2, cap:state.cap,
+          real:state.real, startMonth:state.startMonth, pin:state.pin})
+        .then(function(){ writing.settings = false; }, function(){ writing.settings = false; });
+    }catch(e){ writing.settings = false; }
+  }
+
+  /* ---------------- cross-device sync wiring ----------------
+     The Firebase module script (below) signs this device in anonymously and
+     fires 'family-db-ready' with window.__familyDb set — a shim shaped like
+     {doc(path): {set(data), onSnapshot(onNext, onError)}}, matching exactly
+     what connect() below already expects, so nothing else here changed. */
+  function connect(){
+    document.getElementById('csvBtn').hidden = false;   /* backup now runs locally, always available */
+    function wireUp(){
+      db = window.__familyDb; markSync(true);
+      db.doc('bank/settings').onSnapshot(function(s){
+        if(writing.settings || !s.exists) return;
+        var d = s.data() || {};
+        if(typeof d.rate === 'number') state.rate = d.rate;
+        if(typeof d.rate2 === 'number') state.rate2 = d.rate2;
+        if(typeof d.cap === 'number') state.cap = d.cap;
+        if(d.startMonth) state.startMonth = d.startMonth;
+        if(typeof d.pin === 'string') state.pin = d.pin;
+        if(d.real) state.real = true;
+        saveLocal(); renderAll();
+      }, function(){});
+      KIDS.forEach(function(k){
+        db.doc('bank/'+k).onSnapshot(function(s){
+          if(writing[k] > 0 || Date.now() < (quiet[k] || 0)) return;
+          if(!s.exists){ if(state.real) persist(k); return; }
+          var d = s.data() || {};
+          if(!Array.isArray(d.entries)) return;   /* never let a malformed doc wipe the ledger */
+          state.kids[k].opening = d.opening || state.kids[k].opening;
+          state.kids[k].entries = d.entries;
+          saveLocal(); renderAll();
+        }, function(){ toast('Lost the connection to your account — still saving on this device'); });
+      });
+    }
+    window.addEventListener('family-db-ready', wireUp);
+    window.addEventListener('family-db-error', function(){ markSync(false); });
+    if(window.__familyDb) wireUp(); else markSync(false);
+  }
+  function markSync(live){
+    var chip = document.getElementById('syncChip');
+    chip.classList.toggle('live', !!live);
+    document.getElementById('syncText').textContent = live ? 'Synced across devices' : 'Saved on this device only';
+    document.getElementById('footNote').innerHTML = live
+      ? 'Saved to the family hub — open it on any device and the balances follow.'
+      : 'Could not connect just now, so this is saved in this browser only.';
+  }
+
+  /* ---------------- the savings pot (kid view) ---------------- */
+  function potSVG(kid, savings){
+    /* a log-ish scale: always visibly moves, never fills right up */
+    var lvl = (Math.log10(Math.max(savings, 10)) - 1) / 3;
+    lvl = Math.max(0.07, Math.min(0.95, lvl));
+    var wall = 'M22 62C12 94 18 130 40 140H100C122 130 128 94 118 62Z';
+    var top = 58, bot = 140, h = (bot-top)*lvl, y = bot - h;
+    var pile = '', row, col;
+    for(row=0;row<5;row++) for(col=0;col<4;col++){
+      pile += star(70 + (col-1.5)*17 + (row%2?4:-4), 134 - row*18, 5.6);
+    }
+    var rx = Math.min(48, 46 - (y - 60) * (2/80));
+    return '<svg class="potart" viewBox="0 0 140 156" role="img" aria-label="'+NAMES[kid]+'’s savings pot">'
+      + '<defs><clipPath id="pb-'+kid+'"><ellipse cx="70" cy="60" rx="48" ry="11"/><path d="'+wall+'"/></clipPath>'
+      +   '<clipPath id="pl-'+kid+'"><rect x="0" y="'+y.toFixed(1)+'" width="140" height="'+(h+18).toFixed(1)+'"/></clipPath></defs>'
+      + '<rect x="30" y="132" width="19" height="22" rx="9.5" fill="#4A4470"/>'
+      + '<rect x="91" y="132" width="19" height="22" rx="9.5" fill="#4A4470"/>'
+      + '<path d="'+wall+'" fill="#EFF2FD"/>'
+      + '<g clip-path="url(#pb-'+kid+')">'
+      +   '<ellipse cx="70" cy="60" rx="48" ry="11" fill="#DDE3F6"/>'
+      +   '<rect x="10" y="'+y.toFixed(1)+'" width="120" height="'+(h+16).toFixed(1)+'" fill="#F5B21C"/>'
+      +   '<ellipse cx="70" cy="'+y.toFixed(1)+'" rx="'+rx.toFixed(1)+'" ry="'+(rx*0.2).toFixed(1)+'" fill="#FFD766"/>'
+      +   '<g fill="#FFF6D6" opacity=".9" clip-path="url(#pl-'+kid+')">' + pile + '</g>'
+      + '</g>'
+      + '<path d="'+wall+'" fill="none" stroke="#4A4470" stroke-width="5" stroke-linejoin="round"/>'
+      + '<ellipse cx="70" cy="60" rx="48" ry="11" fill="none" stroke="#5F5892" stroke-width="9"/>'
+      + '<ellipse cx="70" cy="60" rx="52.6" ry="13.6" fill="none" stroke="#4A4470" stroke-width="4"/>'
+      + '<ellipse cx="70" cy="60" rx="43.4" ry="8.4" fill="none" stroke="#4A4470" stroke-width="4"/>'
+      + '</svg>';
+  }
+  /* the spending jar: real coins you can take out and use */
+  function jarSVG(kid, amount){
+    var lvl = Math.log10(Math.max(amount, 1)) / 2;
+    lvl = Math.max(amount > 0 ? 0.08 : 0.02, Math.min(0.95, lvl));
+    var body = 'M44 51H96L102 66V126A20 20 0 0 1 82 146H58A20 20 0 0 1 38 126V66Z';
+    var top = 62, bot = 142, h = (bot-top)*lvl, y = bot - h;
+    var coins = '', row, col, cx, cy;
+    for(row=0;row<6;row++){
+      for(col=0;col<3;col++){
+        cx = 70 + (col-1)*19 + (row%2 ? 9 : -3);
+        cy = 136 - row*12;
+        coins += '<ellipse cx="'+cx+'" cy="'+cy+'" rx="10.5" ry="4.6" fill="#D08F2E"/>'
+              +  '<ellipse cx="'+cx+'" cy="'+(cy-2.6)+'" rx="10.5" ry="4.6" fill="#F5C063"/>';
+      }
+    }
+    return '<svg class="potart" viewBox="0 0 140 156" role="img" aria-label="'+NAMES[kid]+'’s spending jar">'
+      + '<defs><clipPath id="jb-'+kid+'"><path d="'+body+'"/></clipPath>'
+      +   '<clipPath id="jl-'+kid+'"><rect x="0" y="'+y.toFixed(1)+'" width="140" height="'+(h+14).toFixed(1)+'"/></clipPath></defs>'
+      + '<path d="'+body+'" fill="#F1F5FF"/>'
+      + '<g clip-path="url(#jb-'+kid+')">'
+      +   '<g clip-path="url(#jl-'+kid+')">' + coins + '</g>'
+      +   '<path d="M50 62V128" stroke="#FFFFFF" stroke-width="7" opacity=".5" stroke-linecap="round" fill="none"/>'
+      + '</g>'
+      + '<path d="'+body+'" fill="none" stroke="#5B5A8A" stroke-width="5" stroke-linejoin="round"/>'
+      + '<rect x="41" y="38" width="58" height="13" rx="6.5" fill="#B9C4E6" stroke="#5B5A8A" stroke-width="4.5"/>'
+      + '<path d="M52 44.5h36" stroke="#5B5A8A" stroke-width="2.5" stroke-linecap="round" opacity=".5"/>'
+      + '</svg>';
+  }
+
+  function star(cx, cy, r){
+    var pts = [], i, ang, rad;
+    for(i=0;i<10;i++){
+      ang = (Math.PI/5)*i - Math.PI/2;
+      rad = (i%2===0) ? r : r*0.44;
+      pts.push((cx+Math.cos(ang)*rad).toFixed(1)+','+(cy+Math.sin(ang)*rad).toFixed(1));
+    }
+    return '<polygon points="'+pts.join(' ')+'"/>';
+  }
+
+  /* ---------------- kid cards ---------------- */
+  function renderKids(){
+    var host = document.getElementById('kidCards');
+    var parent = state.mode === 'parent';
+    host.innerHTML = KIDS.map(function(k){
+      var b = balances(k);
+      var body;
+      if(parent){
+        body = '<div class="pots">'
+          + '<div class="pot"><span class="lab">Savings</span><input class="amt" id="sav-'+k+'" inputmode="decimal" value="'+fmt(b.savings)+'" aria-label="'+NAMES[k]+' savings"></div>'
+          + '<div class="pot"><span class="lab">Spending</span><input class="amt" id="spd-'+k+'" inputmode="decimal" value="'+fmt(b.spending)+'" aria-label="'+NAMES[k]+' spending"></div>'
+          + '</div>'
+          + '<div class="kidacts">'
+          +   '<button class="btn" data-form="spend" data-kid="'+k+'">Spent something</button>'
+          +   '<button class="btn" data-form="add" data-kid="'+k+'">Add money</button>'
+          + '</div>';
+      } else {
+        body = '<div class="twopots">'
+          + '<div class="half">'
+          +   '<span class="potlab">Savings pot</span>'
+          +   potSVG(k, b.savings)
+          +   '<p class="said">Your savings earn<b>'+fmt(currentInterest(k))+' a month</b></p>'
+          +   (inTier2(b.savings)
+                ? '<p class="tiernote">You have passed '+fmt(state.cap)+' a month, so the extra now grows at the slower rate.</p>'
+                : '')
+          + '</div>'
+          + '<div class="potseam" aria-hidden="true"></div>'
+          + '<div class="half">'
+          +   '<span class="potlab">Spending pot</span>'
+          +   jarSVG(k, b.spending)
+          +   '<p class="said">You currently have<b>'+fmt(b.spending)+' to spend</b></p>'
+          +   '<button class="btn" data-form="spend" data-kid="'+k+'">Log something you’ve spent here</button>'
+          + '</div>'
+          + '</div>';
+      }
+      return '<div class="card kid" data-kid="'+k+'"><h2 class="kidname">'+NAMES[k].toUpperCase()+'</h2>'
+        + body
+        + (state.openForm && state.openForm.kid === k ? formHTML(k, state.openForm.mode) : '')
+        + '</div>';
+    }).join('');
+
+    if(parent) KIDS.forEach(function(k){ wireAmount('sav-'+k, k, 'savings'); wireAmount('spd-'+k, k, 'spending'); });
+    host.querySelectorAll('[data-form]').forEach(function(b){
+      b.addEventListener('click', function(){
+        var same = state.openForm && state.openForm.kid === b.dataset.kid && state.openForm.mode === b.dataset.form;
+        state.openForm = same ? null : {kid:b.dataset.kid, mode:b.dataset.form};
+        renderKids();
+        if(state.openForm){ var el = document.getElementById('f-amt-'+state.openForm.kid); if(el) el.focus(); }
+      });
+    });
+    wireForm();
+  }
+
+  function formHTML(kid, mode){
+    var spend = mode === 'spend';
+    return '<form class="form" data-kid="'+kid+'" data-mode="'+mode+'" novalidate>'
+      + '<div class="fr"><input id="f-amt-'+kid+'" inputmode="decimal" placeholder="$0.00" aria-label="Amount">'
+      +   '<input id="f-what-'+kid+'" placeholder="'+(spend?'What did it go on?':'Where is it from?')+'" aria-label="Description"></div>'
+      + (spend ? '' : '<select id="f-acct-'+kid+'" aria-label="Which pot"><option value="savings">into savings</option><option value="spending">into spending</option></select>')
+      + '<div class="fa"><span class="ferr" data-err="1"></span>'
+      +   '<button type="button" class="btn ghost" data-cancel="1">Cancel</button>'
+      +   '<button type="submit" class="btn solid" data-save="1">'+(spend?'Record it':'Add it')+'</button></div>'
+      + '</form>';
+  }
+  function wireForm(){
+    var f = document.querySelector('.form');
+    if(!f) return;
+    var kid = f.dataset.kid, mode = f.dataset.mode;
+    function submit(){
+      var amtEl = document.getElementById('f-amt-'+kid);
+      var amt = parseAmt(amtEl.value);
+      var what = document.getElementById('f-what-'+kid).value.trim();
+      var err = f.querySelector('[data-err]');
+      if(amt === null || amt <= 0){
+        err.textContent = 'Type an amount, like 4.50';
+        amtEl.focus();
+        return;
+      }
+      err.textContent = '';
+      state.openForm = null;
+      if(mode === 'spend'){
+        addEntry(kid, {type:'purchase', amount:amt, account:'spending', what:what || 'Spending'});
+        toast('Recorded ' + fmt(amt) + (what ? ' for ' + what : '') + ' from ' + NAMES[kid] + '’s spending');
+      } else {
+        addEntry(kid, {type:'deposit', amount:amt, account:document.getElementById('f-acct-'+kid).value, what:what || 'Money in'});
+        toast('Added ' + fmt(amt) + ' to ' + NAMES[kid] + '’s pot');
+      }
+    }
+    /* A real <form> with a type="submit" button is the most reliable way to catch
+       a tap here across phone browsers: the browser's own submit mechanism fires
+       even when the on-screen keyboard is mid-close and the page is reflowing
+       under the finger — exactly when a plain click/pointerdown handler on the
+       button can be missed or land on the wrong element. `pointerdown` is kept as
+       a fast path (fires before that reflow starts); `fired` stops it from also
+       running once the browser's own `submit` event arrives for the same tap. */
+    var fired = false;
+    function fireOnce(){
+      if(fired) return;
+      fired = true;
+      var focused = document.activeElement;
+      if(focused && focused.blur) focused.blur();
+      submit();
+    }
+    f.addEventListener('submit', function(e){ e.preventDefault(); fireOnce(); });
+    var saveBtn = f.querySelector('[data-save]'), cancelBtn = f.querySelector('[data-cancel]');
+    saveBtn.addEventListener('pointerdown', function(e){
+      fired = false;
+      if(e.cancelable) e.preventDefault();
+      fireOnce();
+    });
+    var cancelled = false;
+    function cancel(e){
+      if(e && e.cancelable) e.preventDefault();
+      if(cancelled) return;
+      cancelled = true;
+      state.openForm = null;
+      renderKids();
+    }
+    cancelBtn.addEventListener('pointerdown', cancel);
+    cancelBtn.addEventListener('click', cancel);
+  }
+  function wireAmount(id, kid, field){
+    var el = document.getElementById(id);
+    if(!el) return;
+    el.addEventListener('focus', function(){ el.value = balances(kid)[field].toFixed(2); el.select(); });
+    el.addEventListener('blur', function(){
+      var v = parseAmt(el.value), cur = balances(kid)[field];
+      if(v === null || v === cur){ el.value = fmt(cur); return; }
+      if(state.kids[kid].entries.length === 0){
+        state.kids[kid].opening[field] = v;
+        state.real = true;
+        if(!state.startMonth) state.startMonth = nowMonth();
+        persist(kid); persistSettings(); renderAll();
+      } else {
+        addEntry(kid, {type:'adjust', amount:r2(v-cur), account:field, what:'Correction'});
+      }
+    });
+    el.addEventListener('keydown', function(e){ if(e.key === 'Enter') el.blur(); });
+  }
+
+  /* ---------------- interest queue ---------------- */
+  function renderInterest(){
+    var anyPending = false;
+    var html = KIDS.map(function(k){
+      var pend = pendingMonths(k);
+      if(pend.length) anyPending = true;
+      var due = pend.length ? interestFor(k, pend[0]) : 0;
+      var queue = pend.length > 1
+        ? '<span class="queue">'+(pend.length-1)+' more waiting after this one: '
+            + pend.slice(1).map(monthShort).join(', ') + '</span>' : '';
+      return '<div class="row" data-kid="'+k+'">'
+        + '<span class="who">'+NAMES[k]+'</span>'
+        + '<span class="due">'
+        +   (pend.length
+              ? '<span class="per">'+monthName(pend[0])+'</span><b>'+fmt(due)+'</b> — interest, waiting to be decided' + queue
+              : '<span class="clear">All caught up. Next on '+monthName(addMonth(nowMonth(),1))+'.</span>')
+        + '</span>'
+        + '<span class="acts">'
+        +   (pend.length
+              ? '<button class="btn keep" data-kid="'+k+'" data-period="'+pend[0]+'" data-act="savings">Keep in savings</button>'
+                + '<button class="btn take" data-kid="'+k+'" data-period="'+pend[0]+'" data-act="spending">Move to spending</button>'
+              : '')
+        + '</span></div>';
+    }).join('');
+    document.getElementById('interestRows').innerHTML = html;
+    document.getElementById('interestEyebrow').textContent = anyPending ? 'Interest waiting to be decided' : 'Interest';
+    document.querySelectorAll('#interestRows .btn[data-act]').forEach(function(b){
+      b.addEventListener('click', function(){
+        var kid = b.dataset.kid, period = b.dataset.period;
+        var amt = interestFor(kid, period);
+        if(amt <= 0) return;
+        addEntry(kid, {type:'interest', amount:amt, account:b.dataset.act, period:period,
+          date:period+'-01', what:'Interest for '+monthName(period)});
+      });
+    });
+  }
+
+  /* ---------------- history ---------------- */
+  function entryDelta(e){ return e.type === 'purchase' ? -e.amount : e.amount; }
+  function entryWhere(e){
+    if(e.type === 'purchase') return 'from spending';
+    if(e.type === 'interest') return e.account === 'savings' ? 'kept in savings' : 'moved to spending';
+    if(e.type === 'adjust') return 'correction to ' + e.account;
+    return 'into ' + e.account;
+  }
+  function renderLedger(){
+    var parent = state.mode === 'parent';
+    var list = allEntries().filter(function(r){ return state.who === 'all' || r.kid === state.who; });
+    var host = document.getElementById('ledger');
+    if(!list.length){
+      host.innerHTML = '<li><span class="empty">Nothing recorded yet.</span></li>';
+    } else {
+      host.innerHTML = list.slice(0,60).map(function(r){
+        var e = r.e, d = entryDelta(e);
+        return '<li><span class="when2">'+shortDate(e.date)+'</span>'
+          + '<span class="what"><span class="t">'+escapeHTML(e.what||'')+'</span><span class="m">'+entryWhere(e)+'</span></span>'
+          + '<span class="who2" data-kid="'+r.kid+'">'+NAMES[r.kid]+'</span>'
+          + '<span class="delta '+(d<0?'down':'up')+'">'+(d<0?'−':'+')+fmt(Math.abs(d))+'</span>'
+          + (parent ? '<button class="del" title="Delete this entry" data-kid="'+r.kid+'" data-id="'+e.id+'">×</button>' : '<span></span>')
+          + '</li>';
+      }).join('');
+      if(parent) host.querySelectorAll('.del').forEach(function(b){
+        b.addEventListener('click', function(){ removeEntry(b.dataset.kid, b.dataset.id); });
+      });
+    }
+    var spends = allEntries().filter(function(r){ return r.e.type === 'purchase' && (state.who === 'all' || r.kid === state.who); });
+    var total = spends.reduce(function(a,r){ return a + r.e.amount; }, 0);
+    var sum = document.getElementById('spentsum');
+    if(!spends.length){ sum.innerHTML = 'No spending logged yet.'; return; }
+    var top = {};
+    spends.forEach(function(r){ var w = r.e.what || 'Spending'; top[w] = (top[w]||0) + r.e.amount; });
+    var pairs = Object.keys(top).map(function(w){ return [w, top[w]]; }).sort(function(a,b){ return b[1]-a[1]; }).slice(0,3);
+    var name = state.who === 'all' ? 'Zev and Eve have' : NAMES[state.who] + ' has';
+    sum.innerHTML = name + ' spent <b>'+fmt(total)+'</b> across '+spends.length+' purchase'+(spends.length===1?'':'s')
+      + '. Biggest: ' + pairs.map(function(p){ return escapeHTML(p[0])+' '+fmt(p[1]); }).join(' · ') + '.';
+  }
+
+  /* ---------------- projection ---------------- */
+  function metric(){ return state.mode === 'kid' ? 'interest' : state.metric; }
+  /* stepped month by month, because the tiered rate has no tidy formula */
+  function project(){
+    var S = balances(state.kid).savings, n = state.months, i;
+    var sav = [S], pay = [interestOn(S)];
+    for(i=1;i<=n;i++){
+      sav[i] = r2(sav[i-1] + interestOn(sav[i-1]));
+      pay[i] = interestOn(sav[i]);
+    }
+    var flat = interestOn(S);
+    return {S:S, n:n, sav:sav, pay:pay, flat:flat};
+  }
+  function series(){
+    var p = project(), kept = [], taken = [], i;
+    for(i=0;i<=p.n;i++){
+      if(metric() === 'interest'){ kept.push(p.pay[i]); taken.push(p.flat); }
+      else { kept.push(p.sav[i]); taken.push(p.S + p.flat * i); }
+    }
+    return {kept:kept, taken:taken, S:p.S, n:p.n, p:p};
+  }
+  function niceTicks(max){
+    if(max <= 0) return [0,1];
+    var raw = max/4, mag = Math.pow(10, Math.floor(Math.log10(raw))), norm = raw/mag;
+    var step = (norm<=1?1:norm<=2?2:norm<=2.5?2.5:norm<=5?5:10)*mag;
+    var t = [], v = 0;
+    while(v < max + step*0.5){ t.push(v); v += step; }
+    return t;
+  }
+  var PAD = {l:74, r:76, t:18, b:44}, W = 820, H = 348, geom = null;
+
+  function drawChart(){
+    var d = series(), svg = document.getElementById('plot');
+    var ticks = niceTicks(Math.max(d.kept[d.n], d.taken[d.n]));
+    var yMax = ticks[ticks.length-1] || 1;
+    var pw = W-PAD.l-PAD.r, ph = H-PAD.t-PAD.b;
+    var X = function(i){ return PAD.l + (i/d.n)*pw; };
+    var Y = function(v){ return PAD.t + ph - (v/yMax)*ph; };
+    geom = {X:X, Y:Y, d:d};
+    var money_ = (metric() === 'interest') ? money : money0;
+    var g = '', i;
+    ticks.forEach(function(t){
+      var y = Y(t);
+      g += '<line x1="'+PAD.l+'" y1="'+y.toFixed(1)+'" x2="'+(W-PAD.r)+'" y2="'+y.toFixed(1)+'" stroke="var(--grid)" stroke-width="1"/>'
+        + '<text x="'+(PAD.l-12)+'" y="'+(y+4.5).toFixed(1)+'" text-anchor="end" font-size="13" font-weight="700" fill="var(--ink-muted)" font-family="Nunito, sans-serif">'+money_.format(t)+'</text>';
+    });
+    var stepX = d.n <= 12 ? 3 : 6;
+    for(i=0;i<=d.n;i+=stepX){
+      g += '<text x="'+X(i).toFixed(1)+'" y="'+(H-PAD.b+24)+'" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink-muted)" font-family="Nunito, sans-serif">'+monthLabel(i)+'</text>';
+    }
+    g += '<line x1="'+PAD.l+'" y1="'+Y(0).toFixed(1)+'" x2="'+(W-PAD.r)+'" y2="'+Y(0).toFixed(1)+'" stroke="var(--line)" stroke-width="1.5"/>';
+    var band = 'M'+X(0).toFixed(1)+' '+Y(d.kept[0]).toFixed(1);
+    for(i=1;i<=d.n;i++) band += ' L'+X(i).toFixed(1)+' '+Y(d.kept[i]).toFixed(1);
+    for(i=d.n;i>=0;i--) band += ' L'+X(i).toFixed(1)+' '+Y(d.taken[i]).toFixed(1);
+    g += '<path d="'+band+'Z" fill="var(--kept-soft)"/>';
+    function line(a){ var p=''; for(var j=0;j<=d.n;j++) p += (j?' L':'M')+X(j).toFixed(1)+' '+Y(a[j]).toFixed(1); return p; }
+    g += '<path d="'+line(d.taken)+'" fill="none" stroke="var(--taken)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>'
+      + '<path d="'+line(d.kept)+'" fill="none" stroke="var(--kept)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>'
+      + '<circle cx="'+X(d.n).toFixed(1)+'" cy="'+Y(d.taken[d.n]).toFixed(1)+'" r="5.5" fill="var(--taken)" stroke="var(--paper)" stroke-width="2"/>'
+      + '<circle cx="'+X(d.n).toFixed(1)+'" cy="'+Y(d.kept[d.n]).toFixed(1)+'" r="5.5" fill="var(--kept)" stroke="var(--paper)" stroke-width="2"/>'
+      + '<text x="'+(X(d.n)+12)+'" y="'+(Y(d.kept[d.n])+5).toFixed(1)+'" font-size="14" font-weight="800" fill="var(--kept)" font-family="Nunito, sans-serif">'+money_.format(d.kept[d.n])+'</text>'
+      + '<text x="'+(X(d.n)+12)+'" y="'+(Y(d.taken[d.n])+5).toFixed(1)+'" font-size="14" font-weight="800" fill="var(--taken)" font-family="Nunito, sans-serif">'+money_.format(d.taken[d.n])+'</text>'
+      + '<line id="cross" x1="0" y1="'+PAD.t+'" x2="0" y2="'+(H-PAD.b)+'" stroke="var(--ink-muted)" stroke-width="1" opacity="0"/>'
+      + '<circle id="dotK" r="6" fill="var(--kept)" stroke="var(--paper)" stroke-width="2" opacity="0"/>'
+      + '<circle id="dotT" r="6" fill="var(--taken)" stroke="var(--paper)" stroke-width="2" opacity="0"/>'
+      + '<rect id="hit" x="'+PAD.l+'" y="'+PAD.t+'" width="'+pw+'" height="'+ph+'" fill="transparent" style="cursor:crosshair"/>';
+    svg.innerHTML = g;
+    wireHover();
+  }
+  function wireHover(){
+    var svg = document.getElementById('plot'), hit = document.getElementById('hit');
+    if(!hit) return;
+    var cross = document.getElementById('cross'), dotK = document.getElementById('dotK'), dotT = document.getElementById('dotT');
+    var tip = document.getElementById('tip'), wrap = document.getElementById('plotwrap');
+    var unit = metric() === 'interest' ? ' a month' : '';
+    function move(ev){
+      var pt = ev.touches ? ev.touches[0] : ev;
+      var box = svg.getBoundingClientRect(), scale = W/box.width, d = geom.d;
+      var i = Math.round((((pt.clientX-box.left)*scale - PAD.l)/(W-PAD.l-PAD.r))*d.n);
+      i = Math.max(0, Math.min(d.n, i));
+      var cx = geom.X(i);
+      cross.setAttribute('x1',cx); cross.setAttribute('x2',cx); cross.setAttribute('opacity','.5');
+      dotK.setAttribute('cx',cx); dotK.setAttribute('cy',geom.Y(d.kept[i])); dotK.setAttribute('opacity','1');
+      dotT.setAttribute('cx',cx); dotT.setAttribute('cy',geom.Y(d.taken[i])); dotT.setAttribute('opacity','1');
+      tip.innerHTML = '<span class="when">'+monthLabel(i)+'</span>'
+        + '<span class="l"><i style="background:var(--kept)"></i>'+fmt(d.kept[i])+unit+' &nbsp;kept</span>'
+        + '<span class="l"><i style="background:var(--taken)"></i>'+fmt(d.taken[i])+unit+' &nbsp;spent</span>';
+      tip.style.opacity = '1';
+      var px = cx/scale, tw = tip.offsetWidth;
+      tip.style.left = Math.max(4, Math.min(wrap.clientWidth-tw-4, px-tw/2))+'px';
+      tip.style.top = Math.max(0, (geom.Y(d.kept[i])/scale) - tip.offsetHeight - 14)+'px';
+    }
+    function leave(){
+      cross.setAttribute('opacity','0'); dotK.setAttribute('opacity','0');
+      dotT.setAttribute('opacity','0'); tip.style.opacity = '0';
+    }
+    hit.addEventListener('mousemove', move);
+    hit.addEventListener('mouseleave', leave);
+    hit.addEventListener('touchstart', move, {passive:true});
+    hit.addEventListener('touchmove', move, {passive:true});
+    hit.addEventListener('touchend', leave);
+  }
+
+  function drawTakeaways(){
+    var d = series(), name = NAMES[state.kid], end = monthLabel(d.n);
+    var now = d.p.flat;              /* what the pot pays this month */
+    var later = d.p.pay[d.n];        /* what it pays by the end, if kept */
+    var html;
+    if(metric() === 'interest'){
+      html = '<div class="tk"><span class="lab">Interest each month now</span><div class="val">'+fmt(now)+'</div>'
+        + '<p>That is what the savings pot pays '+name+' today.</p></div>'
+        + '<div class="tk"><span class="lab">Each month by '+end+', if kept</span><div class="val kept">'+fmt(later)+'</div>'
+        + '<p>Leave the interest in and the monthly payment keeps climbing.</p></div>'
+        + '<div class="tk"><span class="lab">Each month by '+end+', if spent</span><div class="val" style="color:var(--taken)">'+fmt(now)+'</div>'
+        + '<p>Take it out every month and it never grows past '+fmt(now)+'.</p></div>';
+    } else {
+      html = '<div class="tk"><span class="lab">Saving pulls ahead by</span><div class="val kept">'+fmt(d.kept[d.n]-d.taken[d.n])+'</div>'
+        + '<p>That is the gap on the chart by '+end+'.</p></div>'
+        + '<div class="tk"><span class="lab">Savings pot by '+end+'</span><div class="val kept">'+fmt(d.p.sav[d.n])+'</div>'
+        + '<p>It stays at '+fmt(d.S)+' if the interest is taken out every month.</p></div>'
+        + '<div class="tk"><span class="lab">Monthly interest by '+end+'</span><div class="val kept">'+fmt(later)+'</div>'
+        + '<p>Spend it every month and '+name+'’s stays '+fmt(now)+' forever.</p></div>';
+    }
+    document.getElementById('takeaways').innerHTML = html;
+    document.getElementById('chartTitle').textContent = metric() === 'interest'
+      ? 'How much ' + name + ' earns every month'
+      : 'If ' + name + ' keeps the interest vs. spends it';
+    document.getElementById('chartCap').textContent = metric() === 'interest'
+      ? 'The blue line is the payment ' + name + ' gets each month if the interest stays in the pot. The orange line is the same payment if it is taken out and spent — it never moves.'
+      : 'Both lines count every dollar earned — the orange one includes money taken out and spent, so it is a fair race. Saving pulls ahead because next month’s interest is worked out on a bigger balance.';
+  }
+  function drawTable(){
+    var d = series(), step = d.n <= 12 ? 2 : 3, rows = '', i;
+    var head = metric() === 'interest'
+      ? '<tr><th>Month</th><th>Monthly interest if kept</th><th>Monthly interest if spent</th><th>Difference</th></tr>'
+      : '<tr><th>Month</th><th>Kept in savings</th><th>Moved to spending</th><th>Difference</th></tr>';
+    function row(i){
+      return '<tr><td>'+monthLabel(i)+'</td><td>'+fmt(d.kept[i])+'</td><td>'+fmt(d.taken[i])+'</td><td>'+fmt(d.kept[i]-d.taken[i])+'</td></tr>';
+    }
+    for(i=0;i<=d.n;i+=step) rows += row(i);
+    if(d.n % step !== 0) rows += row(d.n);
+    document.getElementById('tablewrap').innerHTML = '<table><thead>'+head+'</thead><tbody>'+rows+'</tbody></table>';
+  }
+
+  /* ---------------- backup ---------------- */
+  function csv(){
+    var rows = [['Date','Kid','Type','Description','Savings change','Spending change']];
+    KIDS.forEach(function(k){
+      rows.push(['', NAMES[k], 'opening', 'Starting balance',
+        state.kids[k].opening.savings.toFixed(2), state.kids[k].opening.spending.toFixed(2)]);
+    });
+    allEntries().slice().reverse().forEach(function(r){
+      var e = r.e, d = effect(e);
+      rows.push([e.date, NAMES[r.kid], e.type, e.what || '',
+        d.savings ? d.savings.toFixed(2) : '', d.spending ? d.spending.toFixed(2) : '']);
+    });
+    KIDS.forEach(function(k){
+      var b = balances(k);
+      rows.push(['', NAMES[k], 'balance', 'Current balance', b.savings.toFixed(2), b.spending.toFixed(2)]);
+    });
+    return rows.map(function(r){
+      return r.map(function(c){ c = String(c); return /[",\n]/.test(c) ? '"'+c.replace(/"/g,'""')+'"' : c; }).join(',');
+    }).join('\n');
+  }
+  document.getElementById('csvBtn').addEventListener('click', function(){
+    var btn = this;
+    try{
+      var blob = new Blob([csv()], {type:'text/csv'});
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url; a.download = 'mama-bank-'+todayISO()+'.csv';
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      setTimeout(function(){ URL.revokeObjectURL(url); }, 1000);
+      btn.textContent = 'Saved'; setTimeout(function(){ btn.textContent = 'Save a backup'; }, 1800);
+    }catch(e){
+      btn.textContent = 'Could not save'; setTimeout(function(){ btn.textContent = 'Save a backup'; }, 1800);
+    }
+  });
+
+  /* ---------------- mode ---------------- */
+  function setMode(m){
+    state.mode = m;
+    document.body.setAttribute('data-mode', m);
+    document.getElementById('modeBtn').textContent = m === 'parent' ? 'Switch to kid view' : 'Parent mode';
+    state.openForm = null;
+    saveLocal(); renderAll();
+  }
+  document.getElementById('modeBtn').addEventListener('click', function(){
+    if(state.mode === 'parent'){ setMode('kid'); return; }
+    if(state.pin){
+      var tries = window.prompt('Parent PIN');
+      if(tries === null) return;
+      if(tries.trim() !== state.pin){ window.alert('That PIN does not match.'); return; }
+    }
+    setMode('parent');
+  });
+
+  /* ---------------- controls ---------------- */
+  document.getElementById('segKid').addEventListener('click', function(e){
+    var b = e.target.closest('button'); if(!b) return;
+    state.kid = b.dataset.v; saveLocal(); renderAll();
+  });
+  document.getElementById('segSpan').addEventListener('click', function(e){
+    var b = e.target.closest('button'); if(!b) return;
+    state.months = Number(b.dataset.v); saveLocal(); renderAll();
+  });
+  document.getElementById('segMetric').addEventListener('click', function(e){
+    var b = e.target.closest('button'); if(!b) return;
+    state.metric = b.dataset.v; saveLocal(); renderAll();
+  });
+  document.getElementById('segWho').addEventListener('click', function(e){
+    var b = e.target.closest('button'); if(!b) return;
+    state.who = b.dataset.v; saveLocal(); renderAll();
+  });
+  function paintSegs(){
+    document.querySelectorAll('#segKid button').forEach(function(b){ b.setAttribute('aria-pressed', b.dataset.v === state.kid ? 'true':'false'); });
+    document.querySelectorAll('#segSpan button').forEach(function(b){ b.setAttribute('aria-pressed', Number(b.dataset.v) === state.months ? 'true':'false'); });
+    document.querySelectorAll('#segMetric button').forEach(function(b){ b.setAttribute('aria-pressed', b.dataset.v === state.metric ? 'true':'false'); });
+    document.querySelectorAll('#segWho button').forEach(function(b){ b.setAttribute('aria-pressed', b.dataset.v === state.who ? 'true':'false'); });
+  }
+  var tableBtn = document.getElementById('tableBtn');
+  tableBtn.addEventListener('click', function(){
+    var t = document.getElementById('tablewrap');
+    t.hidden = !t.hidden;
+    tableBtn.textContent = t.hidden ? 'Show the numbers' : 'Hide the numbers';
+  });
+  var sheet = document.getElementById('sheet');
+  document.getElementById('gearBtn').addEventListener('click', function(e){ e.stopPropagation(); sheet.hidden = !sheet.hidden; });
+  document.addEventListener('click', function(e){ if(!sheet.hidden && !sheet.contains(e.target)) sheet.hidden = true; });
+  document.getElementById('rateInput').addEventListener('change', function(){
+    var v = parseFloat(this.value);
+    if(isFinite(v) && v > 0 && v < 100){ state.rate = v/100; persistSettings(); renderAll(); }
+    this.value = (state.rate*100).toFixed(0);
+  });
+  document.getElementById('capInput').addEventListener('change', function(){
+    var v = parseFloat(this.value);
+    if(isFinite(v) && v > 0){ state.cap = r2(v); persistSettings(); renderAll(); }
+    this.value = state.cap.toFixed(2);
+  });
+  document.getElementById('rate2Input').addEventListener('change', function(){
+    var v = parseFloat(this.value);
+    if(isFinite(v) && v >= 0 && v < 100){ state.rate2 = v/100; persistSettings(); renderAll(); }
+    this.value = (state.rate2*100).toFixed(0);
+  });
+  document.getElementById('startInput').addEventListener('change', function(){
+    if(/^\d{4}-\d{2}$/.test(this.value)){ state.startMonth = this.value; persistSettings(); renderAll(); }
+    this.value = startMonth();
+  });
+  document.getElementById('pinInput').addEventListener('change', function(){
+    state.pin = this.value.replace(/\s/g,'');
+    persistSettings();
+  });
+  document.getElementById('resetBtn').addEventListener('click', function(){
+    if(!window.confirm('Clear every balance and all history, and go back to the example figures?')) return;
+    KIDS.forEach(function(k){ state.kids[k] = {opening:{savings:EXAMPLE[k].savings, spending:EXAMPLE[k].spending}, entries:[]}; });
+    state.real = false; state.startMonth = nowMonth();
+    KIDS.forEach(persist); persistSettings(); renderAll();
+    sheet.hidden = true;
+  });
+
+  function renderAll(){
+    document.getElementById('notice').hidden = state.real;
+    document.getElementById('dateline').textContent = state.mode === 'parent'
+      ? (state.rate*100).toFixed(0)+'% a month up to '+fmt(state.cap)+', then '+(state.rate2*100).toFixed(0)
+        +'% · decided on the 1st'
+      : 'Interest decided on the 1st of every month';
+    document.getElementById('tierNote').textContent =
+      'The full rate covers the first ' + fmt(tierAt()) + ' of savings — that is what pays ' + fmt(state.cap)
+      + ' a month. Anything above it earns ' + (state.rate2*100).toFixed(0)
+      + '%, so the payment keeps rising, just more slowly. It never drops.';
+    document.getElementById('rateInput').value = (state.rate*100).toFixed(0);
+    document.getElementById('capInput').value = state.cap.toFixed(2);
+    document.getElementById('rate2Input').value = (state.rate2*100).toFixed(0);
+    document.getElementById('startInput').value = startMonth();
+    document.getElementById('pinInput').value = state.pin;
+    renderKids(); renderInterest(); paintSegs();
+    drawChart(); drawTakeaways(); drawTable(); renderLedger();
+  }
+  window.addEventListener('resize', function(){ drawChart(); });
+
+  loadLocal();
+  document.body.setAttribute('data-mode', state.mode);
+  document.getElementById('modeBtn').textContent = state.mode === 'parent' ? 'Switch to kid view' : 'Parent mode';
+  markSync(false);
+  renderAll();
+  connect();
+})();
+</script>
+
+</body></html>
