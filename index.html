@@ -521,6 +521,150 @@ h1{
   <div class="sync" id="syncNote"><span class="dot"></span><span id="syncText">Connecting…</span></div>
 </div>
 
+<!-- ============ Zev's homework, read live from Google Sheets ============
+     Reads today's entry from his Chinese and math homework spreadsheets
+     (his teachers' sheets — view-only, read via a restricted API key) and
+     appends it under his "Homework" task as a detail line. Entirely
+     additive: if the lookup fails for any reason, the task just shows
+     with no detail line, same as before this existed. -->
+<script>
+(function(){
+  "use strict";
+  var SHEETS_API_KEY = "AIzaSyDoNwfoJ-ZUHyUeFMme5NtiQN049NEuqQk";
+  var CHINESE_SHEET_ID = "17s6-x1Jt9Wi0qeq3t_t7RRFZIbW86KZypEuyqDcQfw0";
+  var CHINESE_GID = 0;
+  var MATH_SHEET_ID = "14evhfQGG-HWKdZyX4wnPJBihSaBaFf5h0_yTy0VeM0Y";
+  var MATH_GID = 0;
+
+  var homeworkToday = null; /* {chinese: string|null, math: string|null} once resolved */
+
+  function sheetsUrl(path, params){
+    var qs = Object.keys(params).map(function(k){ return k + '=' + encodeURIComponent(params[k]); }).join('&');
+    return 'https://sheets.googleapis.com/v4/spreadsheets/' + path + '?' + qs;
+  }
+
+  function getSheetTitle(spreadsheetId, gid){
+    return fetch(sheetsUrl(spreadsheetId, {key: SHEETS_API_KEY, fields: 'sheets.properties'}))
+      .then(function(r){ return r.json(); })
+      .then(function(json){
+        var sheets = json.sheets || [];
+        for(var i=0;i<sheets.length;i++){
+          if(sheets[i].properties && sheets[i].properties.sheetId === gid) return sheets[i].properties.title;
+        }
+        return null;
+      });
+  }
+
+  function getSheetValues(spreadsheetId, gid){
+    return getSheetTitle(spreadsheetId, gid).then(function(title){
+      if(!title) return [];
+      var range = title + '!A1:Z1000';
+      return fetch(sheetsUrl(spreadsheetId + '/values/' + encodeURIComponent(range), {key: SHEETS_API_KEY}))
+        .then(function(r){ return r.json(); })
+        .then(function(json){ return json.values || []; });
+    });
+  }
+
+  /* "9/14" -> a real Date, inferring the school year from today's date so
+     this keeps working next fall without editing. "9/14-9/18" ranges are
+     handled by the caller passing just the last piece. */
+  function parseMD(str, today){
+    var m = /^\s*(\d{1,2})\s*\/\s*(\d{1,2})\s*$/.exec(str || '');
+    if(!m) return null;
+    var month = parseInt(m[1],10), day = parseInt(m[2],10);
+    var schoolYearStart = (today.getMonth()+1 >= 7) ? today.getFullYear() : today.getFullYear()-1;
+    var year = (month >= 7) ? schoolYearStart : schoolYearStart + 1;
+    return new Date(year, month-1, day);
+  }
+  /* "9/14" -> {start, end} both that day. "9/14-9/18" -> start/end of the
+     range, so a weekly entry can stay showing for every day in its range,
+     not just the last one. */
+  function parseDateCell(cell, today){
+    if(!cell) return null;
+    var parts = String(cell).split(/[-–—]/).map(function(s){ return s.trim(); });
+    var end = parseMD(parts[parts.length-1], today);
+    var start = parts.length > 1 ? parseMD(parts[0], today) : end;
+    if(!end) return null;
+    return {start: start || end, end: end};
+  }
+  function dateOnly(d){ return new Date(d.getFullYear(), d.getMonth(), d.getDate()); }
+  function withinRange(range, today){
+    if(!range) return false;
+    var t = dateOnly(today).getTime();
+    return t >= dateOnly(range.start).getTime() && t <= dateOnly(range.end).getTime();
+  }
+  function findHeaderRow(rows){
+    for(var i=0;i<rows.length;i++){
+      var row = (rows[i]||[]).map(function(c){ return String(c||'').toLowerCase(); });
+      var hasDate = row.some(function(c){ return c.indexOf('date') >= 0; });
+      var hasHw = row.some(function(c){ return c.indexOf('homework') >= 0 || c.indexOf('assignment') >= 0; });
+      if(hasDate && hasHw) return i;
+    }
+    return -1;
+  }
+  function colIndex(headerRow, keywords){
+    for(var i=0;i<headerRow.length;i++){
+      var h = String(headerRow[i]||'').toLowerCase();
+      for(var j=0;j<keywords.length;j++){
+        if(h.indexOf(keywords[j]) >= 0) return i;
+      }
+    }
+    return -1;
+  }
+  function findTodaysEntry(rows, today){
+    var hIdx = findHeaderRow(rows);
+    if(hIdx < 0) return null;
+    var header = rows[hIdx];
+    var dateCol = colIndex(header, ['date']);
+    var hwCol = colIndex(header, ['homework', 'assignment']);
+    if(dateCol < 0 || hwCol < 0) return null;
+    for(var i=hIdx+1;i<rows.length;i++){
+      var row = rows[i];
+      if(!row || !row[dateCol]) continue;
+      var range = parseDateCell(row[dateCol], today);
+      if(withinRange(range, today)){
+        var text = String(row[hwCol]||'').trim();
+        if(text) return text;
+      }
+    }
+    return null;
+  }
+
+  function applyHomeworkDetail(){
+    if(!homeworkToday) return;
+    var li = document.querySelector('li.task[data-kid="zev"][data-id="homework"]');
+    if(!li) return;
+    var body = li.querySelector('.tbody');
+    if(!body) return;
+    var existing = body.querySelector('[data-role="homework-detail"]');
+    if(existing) existing.remove();
+    var parts = [];
+    if(homeworkToday.math) parts.push('Math: ' + homeworkToday.math);
+    if(homeworkToday.chinese) parts.push('Chinese: ' + homeworkToday.chinese);
+    if(!parts.length) return;
+    var span = document.createElement('span');
+    span.className = 'tsub';
+    span.dataset.role = 'homework-detail';
+    span.textContent = parts.join('  ·  ');
+    body.appendChild(span);
+  }
+
+  function loadHomework(){
+    var today = new Date();
+    Promise.all([
+      getSheetValues(CHINESE_SHEET_ID, CHINESE_GID).then(function(rows){ return findTodaysEntry(rows, today); }).catch(function(){ return null; }),
+      getSheetValues(MATH_SHEET_ID, MATH_GID).then(function(rows){ return findTodaysEntry(rows, today); }).catch(function(){ return null; })
+    ]).then(function(results){
+      homeworkToday = {chinese: results[0], math: results[1]};
+      applyHomeworkDetail();
+    });
+  }
+
+  window.__applyHomeworkDetail = applyHomeworkDetail;
+  loadHomework();
+})();
+</script>
+
 <!-- ============ Firebase: shared cross-device storage ============
      This project is shared by every page in the family hub (bank, routine,
      chores, grocery list, …), each writing to its own Firestore collection.
@@ -1177,6 +1321,7 @@ h1{
     state = readLocal();
     wasDone = {zev:false, eve:false};
     buildLists();
+    if(window.__applyHomeworkDetail) window.__applyHomeworkDetail();
     paintPlan();
     render();
     booting = false;
