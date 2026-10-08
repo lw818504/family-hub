@@ -597,7 +597,7 @@ h1{
     for(var i=0;i<rows.length;i++){
       var row = (rows[i]||[]).map(function(c){ return String(c||'').toLowerCase(); });
       var hasDate = row.some(function(c){ return c.indexOf('date') >= 0; });
-      var hasHw = row.some(function(c){ return c.indexOf('homework') >= 0 || c.indexOf('assignment') >= 0; });
+      var hasHw = row.some(function(c){ return c.indexOf('homework') >= 0 || c.indexOf('assignment') >= 0 || c.indexOf('workbook') >= 0; });
       if(hasDate && hasHw) return i;
     }
     return -1;
@@ -616,7 +616,7 @@ h1{
     if(hIdx < 0) return null;
     var header = rows[hIdx];
     var dateCol = colIndex(header, ['date']);
-    var hwCol = colIndex(header, ['homework', 'assignment']);
+    var hwCol = colIndex(header, ['homework', 'assignment', 'workbook']);
     if(dateCol < 0 || hwCol < 0) return null;
     for(var i=hIdx+1;i<rows.length;i++){
       var row = rows[i];
