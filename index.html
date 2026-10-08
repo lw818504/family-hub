@@ -535,6 +535,8 @@ h1{
   var CHINESE_GID = 0;
   var MATH_SHEET_ID = "14evhfQGG-HWKdZyX4wnPJBihSaBaFf5h0_yTy0VeM0Y";
   var MATH_GID = 0;
+  var CHINESE_SHEET_URL = 'https://docs.google.com/spreadsheets/d/' + CHINESE_SHEET_ID + '/edit?gid=' + CHINESE_GID;
+  var MATH_SHEET_URL = 'https://docs.google.com/spreadsheets/d/' + MATH_SHEET_ID + '/edit?gid=' + MATH_GID;
 
   var homeworkToday = null; /* {chinese: string|null, math: string|null} once resolved */
 
@@ -630,23 +632,32 @@ h1{
     return null;
   }
 
+  function homeworkLine(label, text, sheetUrl){
+    var span = document.createElement('span');
+    span.className = 'tsub';
+    span.dataset.role = 'homework-detail';
+    span.textContent = label + ': ' + text + ' — ';
+    var link = document.createElement('a');
+    link.href = sheetUrl;
+    link.target = '_blank';
+    link.rel = 'noopener';
+    link.textContent = 'check sheet';
+    link.style.color = 'inherit';
+    link.style.textDecoration = 'underline';
+    link.addEventListener('click', function(e){ e.stopPropagation(); });
+    span.appendChild(link);
+    return span;
+  }
+
   function applyHomeworkDetail(){
     if(!homeworkToday) return;
     var li = document.querySelector('li.task[data-kid="zev"][data-id="homework"]');
     if(!li) return;
     var body = li.querySelector('.tbody');
     if(!body) return;
-    var existing = body.querySelector('[data-role="homework-detail"]');
-    if(existing) existing.remove();
-    var parts = [];
-    if(homeworkToday.math) parts.push('Math: ' + homeworkToday.math);
-    if(homeworkToday.chinese) parts.push('Chinese: ' + homeworkToday.chinese);
-    if(!parts.length) return;
-    var span = document.createElement('span');
-    span.className = 'tsub';
-    span.dataset.role = 'homework-detail';
-    span.textContent = parts.join('  ·  ');
-    body.appendChild(span);
+    Array.prototype.forEach.call(body.querySelectorAll('[data-role="homework-detail"]'), function(el){ el.remove(); });
+    if(homeworkToday.math) body.appendChild(homeworkLine('Math', homeworkToday.math, MATH_SHEET_URL));
+    if(homeworkToday.chinese) body.appendChild(homeworkLine('Chinese', homeworkToday.chinese, CHINESE_SHEET_URL));
   }
 
   function loadHomework(){
