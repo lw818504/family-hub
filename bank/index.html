@@ -253,11 +253,10 @@ th{font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--in
       <span class="lg"><i style="background:var(--taken)"></i>Interest moved to spending every month</span>
     </div>
     <div class="plotwrap" id="plotwrap">
-      <svg class="plot" id="plot" viewBox="0 0 820 348" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Growth comparison"></svg>
+      <svg class="plot" id="plot" viewBox="0 0 820 200" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Growth comparison"></svg>
       <div class="tip" id="tip"></div>
     </div>
-    <div class="take" id="takeaways"></div>
-    <button class="btn ghost" id="tableBtn" style="margin-top:16px">Show the numbers</button>
+    <button class="btn ghost" id="tableBtn" style="margin-top:12px">Show the numbers</button>
     <div class="tablewrap" id="tablewrap" hidden></div>
   </section>
 
@@ -891,7 +890,7 @@ th{font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--in
     while(v < max + step*0.5){ t.push(v); v += step; }
     return t;
   }
-  var PAD = {l:74, r:76, t:18, b:44}, W = 820, H = 348, geom = null;
+  var PAD = {l:70, r:76, t:14, b:34}, W = 820, H = 200, geom = null;
 
   function drawChart(){
     var d = series(), svg = document.getElementById('plot');
@@ -966,26 +965,7 @@ th{font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--in
   }
 
   function drawTakeaways(){
-    var d = series(), name = NAMES[state.kid], end = monthLabel(d.n);
-    var now = d.p.flat;              /* what the pot pays this month */
-    var later = d.p.pay[d.n];        /* what it pays by the end, if kept */
-    var html;
-    if(metric() === 'interest'){
-      html = '<div class="tk"><span class="lab">Interest each month now</span><div class="val">'+fmt(now)+'</div>'
-        + '<p>That is what the savings pot pays '+name+' today.</p></div>'
-        + '<div class="tk"><span class="lab">Each month by '+end+', if kept</span><div class="val kept">'+fmt(later)+'</div>'
-        + '<p>Leave the interest in and the monthly payment keeps climbing.</p></div>'
-        + '<div class="tk"><span class="lab">Each month by '+end+', if spent</span><div class="val" style="color:var(--taken)">'+fmt(now)+'</div>'
-        + '<p>Take it out every month and it never grows past '+fmt(now)+'.</p></div>';
-    } else {
-      html = '<div class="tk"><span class="lab">Saving pulls ahead by</span><div class="val kept">'+fmt(d.kept[d.n]-d.taken[d.n])+'</div>'
-        + '<p>That is the gap on the chart by '+end+'.</p></div>'
-        + '<div class="tk"><span class="lab">Savings pot by '+end+'</span><div class="val kept">'+fmt(d.p.sav[d.n])+'</div>'
-        + '<p>It stays at '+fmt(d.S)+' if the interest is taken out every month.</p></div>'
-        + '<div class="tk"><span class="lab">Monthly interest by '+end+'</span><div class="val kept">'+fmt(later)+'</div>'
-        + '<p>Spend it every month and '+name+'’s stays '+fmt(now)+' forever.</p></div>';
-    }
-    document.getElementById('takeaways').innerHTML = html;
+    var name = NAMES[state.kid];
     document.getElementById('chartTitle').textContent = metric() === 'interest'
       ? 'How much ' + name + ' earns every month'
       : 'If ' + name + ' keeps the interest vs. spends it';
